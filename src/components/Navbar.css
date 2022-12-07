@@ -1,0 +1,21 @@
+nav {
+  display: flex;
+  box-sizing: border-box;
+  height: 10vh;
+  width: 100%;
+  padding: 1rem;
+  justify-content: space-between;
+  gap: 2rem;
+  align-items: center;
+}
+
+#nav-logo {
+  width: 8vh;
+  height: 4vh;
+}
+
+.nav-left, .navicons {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
