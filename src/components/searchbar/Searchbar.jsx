@@ -1,3 +1,4 @@
+
 const Searchbar = ({setQuery}) => {
 
   const handleInputChange = event => {

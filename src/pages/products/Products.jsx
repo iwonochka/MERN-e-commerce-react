@@ -5,7 +5,10 @@ import { BsFillHeartFill } from "react-icons/bs";
 import { BsBagPlusFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import Searchbar from "../../components/searchbar/Searchbar";
-import Dropdown from 'react-bootstrap/Dropdown';
+import SortDropdown from "../../components/sortDropdown/SortDropdown";
+import Button from 'react-bootstrap/Button';
+import FilterModal from "../../components/filterModal/FilterModal";
+
 
 
 const Products = () => {
@@ -13,9 +16,9 @@ const Products = () => {
   const [hoveredOn, setHoveredOn] = useState("");
   const [isClicked, setIsClicked] = useState(false);
   const [query, setQuery] = useState("")
+  const [modalShow, setModalShow] = useState(false);
 
   const getAllProducts = () => {
-
     axios
       .get(`${process.env.REACT_APP_API_URL}/api/products`)
       .then((response) => setProducts(response.data))
@@ -35,17 +38,7 @@ const Products = () => {
   });
 
 
-  function sortByPriceAsc() {
-    setProducts([...products].sort((a, b) => {return a.price - b.price}))
-  }
 
-  function sortByPriceDesc() {
-    setProducts([...products].sort((a, b) => {return b.price - a.price}))
-  }
-
-  function sortByDefault() {
-    getAllProducts()
-  }
 
   return (
     <div className="Products">
@@ -54,17 +47,9 @@ const Products = () => {
       </section>
       <section className="search-section">
         <Searchbar setQuery={setQuery}/>
-        <Link className="btn btn-outline-dark search-btn">Filter</Link>
-        <Dropdown>
-          <Dropdown.Toggle variant="outline-dark" id="dropdown-basic">
-            Sort
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            <Dropdown.Item onClick={sortByPriceAsc}>Price: lowest</Dropdown.Item>
-            <Dropdown.Item onClick={sortByPriceDesc}>Price: highest</Dropdown.Item>
-            <Dropdown.Item onClick={sortByDefault}>Default</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+        <Button variant="outline-dark" onClick={() => setModalShow(true)}>Filter</Button>
+        <FilterModal show={modalShow} onHide={() => setModalShow(false)} products={products}/>
+        <SortDropdown products={products} setProducts={setProducts} getAllProducts={getAllProducts} />
       </section>
       <section className="products-grid">
         {filteredProducts.map((product) => {
