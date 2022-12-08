@@ -40,3 +40,16 @@
 #card-price {
   margin: 0;
 }
+
+.search-section {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+  gap: 2rem;
+  justify-content: flex-end;
+}
+
+.search-btn {
+  width: 10%;
+}
