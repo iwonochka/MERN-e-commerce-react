@@ -35,15 +35,22 @@ const Products = () => {
   });
 
 
-  function handleSorting(sortingOption) {
-    sortingOption === "price_asc" && products.sort((a, b) => {return a.price - b.price})
-    sortingOption === "price_desc" && products.sort((a, b) => {return b.price - a.price})
+  function sortByPriceAsc() {
+    setProducts([...products].sort((a, b) => {return a.price - b.price}))
+  }
+
+  function sortByPriceDesc() {
+    setProducts([...products].sort((a, b) => {return b.price - a.price}))
+  }
+
+  function sortByDefault() {
+    getAllProducts()
   }
 
   return (
     <div className="Products">
       <section className="products-header">
-        <h1>Title</h1>
+        <h3>{query ? `Results for: ${query}` : "All bikes"}</h3>
       </section>
       <section className="search-section">
         <Searchbar setQuery={setQuery}/>
@@ -53,9 +60,9 @@ const Products = () => {
             Sort
           </Dropdown.Toggle>
           <Dropdown.Menu>
-            <Dropdown.Item onClick={() => {handleSorting("price_asc")}}>Price: lowest</Dropdown.Item>
-            <Dropdown.Item onClick={() => {handleSorting("price_desc")}}>Price: highest</Dropdown.Item>
-            <Dropdown.Item onClick={() => {handleSorting("default")}}>Default</Dropdown.Item>
+            <Dropdown.Item onClick={sortByPriceAsc}>Price: lowest</Dropdown.Item>
+            <Dropdown.Item onClick={sortByPriceDesc}>Price: highest</Dropdown.Item>
+            <Dropdown.Item onClick={sortByDefault}>Default</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </section>
