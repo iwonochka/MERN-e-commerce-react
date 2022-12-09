@@ -1,0 +1,40 @@
+.slider-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 33%;
+  height: 100%;
+}
+
+.slider {
+  cursor: pointer;
+  width: 100%;
+}
+
+.track {
+  background-color: black;
+  height: 3px;
+}
+
+.track:nth-child(2) {
+  background-color: black;
+}
+
+.thumb {
+  width: 0.8rem;
+  height: 0.8rem;
+  background: white;
+  border: 2px solid black;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  top: -6px;
+}
+
+.values-wrapper {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 1rem;
+}

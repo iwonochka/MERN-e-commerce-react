@@ -28,17 +28,18 @@
   flex: 1;
 }
 .card-title-dark {
-  background-color: black;
+  font-weight: bolder;
 }
 
 #product-card-img {
-  width: 26vw;
+  width: 20vw;
   margin-bottom: 2rem;
   align-self: center;
 }
 
 #card-price {
   margin: 0;
+  text-align: start;
 }
 
 .search-section {

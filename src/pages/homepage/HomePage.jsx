@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import './HomePage.css'
 
 const HomePage = () => {
+
   return (
     <main>
       <section className="homepage-preview row">
@@ -21,6 +22,7 @@ const HomePage = () => {
           <Link to="/" className='btn btn-lg btn-dark btn-homepage'>Urban</Link>
         </div>
       </section>
+
     </main>
   )
 }

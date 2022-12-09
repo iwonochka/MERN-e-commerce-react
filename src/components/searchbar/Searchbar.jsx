@@ -6,8 +6,8 @@ const Searchbar = ({setQuery}) => {
   }
 
   return (
-    <form class="form-outline searchbar">
-      <input type="search" name="query" class="form-control" placeholder="Search" aria-label="Search" onChange={handleInputChange} />
+    <form className="form-outline searchbar">
+      <input type="search" name="query" className="form-control" placeholder="Search" aria-label="Search" onChange={handleInputChange} />
     </form>
   )
 }

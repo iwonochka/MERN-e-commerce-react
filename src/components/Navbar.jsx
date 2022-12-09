@@ -17,7 +17,7 @@ const Navbar = () => {
       <div className="navicons">
         <BsSearch/>
         <BsFillHeartFill/>
-        <BsBag/>
+        <NavLink to="/cart" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'}><BsBag/></NavLink>
       </div>
     </nav>
   )
