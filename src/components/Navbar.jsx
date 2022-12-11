@@ -10,9 +10,11 @@ const Navbar = () => {
     <nav>
       <div className="nav-left">
         <img id="nav-logo" src={logo} alt="logo" />
-        <NavLink to="/" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'}>Home</NavLink>
-        <NavLink to="/bikes" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'}>All bikes</NavLink>
-        <NavLink to="#" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'}> Link 3</NavLink>
+        <div className="navlinks">
+          <NavLink to="/" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'}>Home</NavLink>
+          <NavLink to="/bikes" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'}>All bikes</NavLink>
+          <NavLink to="#" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'}> About</NavLink>
+        </div>
       </div>
       <div className="navicons">
         <BsSearch/>

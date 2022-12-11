@@ -9,6 +9,8 @@
 .preview-img {
   object-fit: cover;
   padding: 0;
+  height: 90vh;
+  width: -webkit-fill-available;
 }
 .homepage-preview-section {
   display: flex;
@@ -20,9 +22,13 @@
   top: 80%;
   left: 25%;
   width: 50%;
+}
+
+.btn-main {
   border: 1px solid white;
 }
-.btn-homepage:hover {
+
+.btn-main:hover {
   border: 1px solid white;
   background-color: #000000;
   box-shadow: 0px 10px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);

@@ -58,17 +58,17 @@ const Products = () => {
         <Row>
         {filteredProducts.map((product) => {
           return (
-            <Col sm={12} md={4} lg={3} gap={5} className="product-card" key={product._id} onMouseEnter={()=> {setHoveredOn(product._id)}} onMouseLeave={()=> {setHoveredOn("")}}>
+            <Col sm={12} md={4} lg={4} className="product-card" key={product._id} onMouseEnter={()=> {setHoveredOn(product._id)}} onMouseLeave={()=> {setHoveredOn("")}}>
               <Link to={`/bikes/${product._id}`} >
-                <img id="product-card-img" src={product.image} alt={product.model} />
+                <img id="product-card-img" src={product.images[0]} alt={product.model} />
               </Link>
-              <div>
-              <Link to={`/bikes/${product._id}`} ><section className={hoveredOn === product._id && "card-title-dark"}><h5>{product.model}</h5></section></Link>
+              <div className="product-card-details fading-border">
+              <Link className="card-title" to={`/bikes/${product._id}`} ><section className={hoveredOn === product._id && "card-title-dark"}><h5>{product.model}</h5></section></Link>
                 <p id="card-price">{product.price} €</p>
               </div>
               {hoveredOn === product._id &&
-                <div>
-                  <BsFillHeartFill onClick={handleClick} style={{color: isClicked ? 'red' : 'black'}}/>
+                <div className="card-icons">
+                  <BsFillHeartFill onClick={handleClick} style={{color: isClicked ? 'red' : 'white'}}/>
                   <BsBagPlusFill/>
                 </div>
               }

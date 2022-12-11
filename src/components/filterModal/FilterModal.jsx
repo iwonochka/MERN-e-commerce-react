@@ -3,8 +3,9 @@ import Modal from 'react-bootstrap/Modal';
 import logo from '../../assets/vellox.png';
 import Form from 'react-bootstrap/Form';
 import Slider from '../slider/Slider'
+import ColorPicker from '../color-picker/ColorPicker';
 import "./FilterModal.css"
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const FilterModal = (props) => {
   const brands = [...new Set(props.products.map(product => product.brand))];
@@ -21,21 +22,32 @@ const FilterModal = (props) => {
     maxPrice: null,
     minPrice: null,
   });
-  let colorsArr = []
+
 
   function handleSubmit(event) {
     event.preventDefault();
     console.log(filterData)
     setFilterData({})
-    colorsArr = []
   }
 
   const handleColors = (e) => {
-    colorsArr.push(e.target.value)
-    // setFilterData({...filterData, dataColors: (filterData.dataColors, e.target.value)})
-    setFilterData({...filterData, })
-  }
-  console.log()
+    e.target.checked
+      ? setFilterData({
+          ...filterData,
+          dataColors: [...filterData.dataColors, e.target.value],
+        })
+      : setFilterData({
+          ...filterData,
+          dataColors: filterData.dataColors.filter(
+            (color) => color !== e.target.value
+          ),
+        });
+  };
+
+  useEffect(() => {
+    console.log(filterData.dataColors);
+  }, [filterData]);
+
   return (
     <Modal
     {...props}
@@ -70,13 +82,12 @@ const FilterModal = (props) => {
           onChange={(e) => setFilterData({ ...filterData, iseBike: e.target.value })}
           />
           <p>Colors:</p>
-          {colors.map((color) => (
-            <div className="form-check-inline">
-              <input style={color === "white" ? {backgroundColor: "whitesmoke"} : {backgroundColor: color}} name={color} type="checkbox" value={color} id="inline-checkbox-1" className="form-check-input" aria-label={color} onChange={(e) => handleColors(e)}/>
-            </div>
-          ))}
+          <ColorPicker colors={colors} handleColors={handleColors}/>
         </div>
-        <Slider minPrice={minPrice} maxPrice={maxPrice} setFilterData={setFilterData} filterData={filterData}/>
+        <div>
+          <p>Price in €</p>
+          <Slider minPrice={minPrice} maxPrice={maxPrice} setFilterData={setFilterData} filterData={filterData}/>
+        </div>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="dark" type="submit">Filter</Button>
