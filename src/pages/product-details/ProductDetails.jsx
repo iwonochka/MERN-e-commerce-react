@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -13,6 +13,7 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import ColorPicker from "../../components/color-picker/ColorPicker";
 import { BsFillHeartFill } from "react-icons/bs";
 import { BsBag } from "react-icons/bs";
+import Form from "react-bootstrap/Form";
 
 
 const ProductDetails = () => {
@@ -21,7 +22,11 @@ const ProductDetails = () => {
   const { productId } = useParams();
   // console.log(productId)
   const [show, setShow] = useState(false);
+  const [color, setColor] = useState("")
+  const [size, setSize] = useState("")
+  const [active, setActive] = useState(false)
   const target = useRef(null);
+  const navigate = useNavigate();
 
   const getProduct = () => {
 
@@ -33,10 +38,23 @@ const ProductDetails = () => {
     })
     .catch((error) => console.log(error));
   };
-
   useEffect(()=> {
     getProduct();
   }, [] );
+
+  function handleSubmit() {
+    const requestBody = { product, size, color };
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/api/cart`, requestBody)
+      .then((res) => {
+        console.log("respoonse", res)
+        // authenticateUser();
+        navigate('/cart');
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+      });
+  }
 
   return (
   <div>
@@ -68,20 +86,19 @@ const ProductDetails = () => {
                   </Tooltip>
                 )}
               </Overlay>
-
               <div className="options-container">
                 {product.sizes.map((size) => (
-                  <Button variant="outline-dark">{size}</Button>
+                  <Button variant={active ? "dark" : "outline-dark"} onClick={()=> {setSize(size); setActive(!active)}}>{size}</Button>
                 ))}
               </div>
               <p><b>Choose a color:</b></p>
               <div className="options-container">
-                <ColorPicker colors={product.colors}></ColorPicker>
+                <ColorPicker colors={product.colors} setColor={setColor}></ColorPicker>
               </div>
             </div>
             <div className="actions-container">
               <Button className="btn-main" id="fav-btn" variant="dark"><BsFillHeartFill/></Button>
-              <Button className="btn-main" id="action-btn" variant="dark">Add to cart<BsBag style={{marginLeft: "6", marginBottom: "5"}}/></Button>
+              <Button className="btn-main" id="action-btn" variant="dark">Add to cart<BsBag style={{marginLeft: "6", marginBottom: "5"}} onClick={handleSubmit}/></Button>
             </div>
           </div>
         </Col>

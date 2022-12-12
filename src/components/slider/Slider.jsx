@@ -11,6 +11,7 @@ const Slider = ({minPrice, maxPrice, setFilterData, filterData}) => {
     <ReactSlider
           defaultValue={[minPrice, maxPrice]}
           className="slider"
+          value={[min, max]}
           trackClassName="tracker"
           min={minPrice}
           max={maxPrice}
