@@ -1,25 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const Cart = () => {
-  const [cart, setCart] = useState({})
-  function handleCart() {
+const Cart = (props) => {
+  console.log("cart items:", props.cartItems)
+  // function openCart() {
+  //   localStorage.setItem("cart", JSON.stringify(props.cartItems));
+  //   // getting back the object
+  //   setCart(JSON.parse(localStorage.getItem("cart")));
+  // }
 
-    localStorage.setItem("cart", JSON.stringify(cart));
-    // getting back the object
-    const cartResponse = JSON.parse(localStorage.getItem("cart"));
-  }
-
-  function addToCart(product, size, color) {
-    const newItem = {
-      productId: product._id,
-      sizeChoice: size,
-      colorChoice: color
-    }
-    setCart([...cart, newItem])
-  }
+  // useEffect(() => {
+  //   openCart();
+  // }, []);
 
   return (
-    <div>Cart</div>
+    <div>
+      {props.cartItems.map((cartItem) => (
+        <div>
+          <p>{cartItem.product.model}</p>
+          <p>{cartItem.sizeChoice}</p>
+          <p>{cartItem.colorChoice}</p>
+        </div>
+      ))}
+    </div>
   )
 }
 

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,21 +10,21 @@ import {AiFillQuestionCircle} from "react-icons/ai"
 import Button from 'react-bootstrap/Button';
 import Overlay from 'react-bootstrap/Overlay';
 import Tooltip from 'react-bootstrap/Tooltip';
-import ColorPicker from "../../components/color-picker/ColorPicker";
 import { BsFillHeartFill } from "react-icons/bs";
 import { BsBag } from "react-icons/bs";
-import Form from "react-bootstrap/Form";
+import { BsCheck } from "react-icons/bs";
 
 
-const ProductDetails = () => {
+
+const ProductDetails = (props) => {
 
   const [product, setProduct] = useState(null);
   const { productId } = useParams();
   // console.log(productId)
   const [show, setShow] = useState(false);
-  const [color, setColor] = useState("")
-  const [size, setSize] = useState("")
-  const [active, setActive] = useState(false)
+  const [colorChoice, setColorChoice] = useState("")
+  const [sizeChoice, setSizeChoice] = useState("")
+
   const target = useRef(null);
   const navigate = useNavigate();
 
@@ -33,7 +33,6 @@ const ProductDetails = () => {
     axios.get(`${process.env.REACT_APP_API_URL}/api/products/${productId}`)
     .then((response) => {
       const oneProduct = response.data;
-      console.log("response data", response.data)
       setProduct(oneProduct);
     })
     .catch((error) => console.log(error));
@@ -42,18 +41,15 @@ const ProductDetails = () => {
     getProduct();
   }, [] );
 
-  function handleSubmit() {
-    const requestBody = { product, size, color };
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/api/cart`, requestBody)
-      .then((res) => {
-        console.log("respoonse", res)
-        // authenticateUser();
-        navigate('/cart');
-      })
-      .catch((error) => {
-        console.log(error.response.data.message);
-      });
+  function addCartItem() {
+    const newItem = {
+      product: product,
+      sizeChoice: sizeChoice,
+      colorChoice: colorChoice
+    }
+    props.setCartItems([...props.cartItems, newItem])
+    console.log("cartItems:" , props.cartItems, "newItem:", newItem)
+    //  how to pass props??
   }
 
   return (
@@ -88,17 +84,21 @@ const ProductDetails = () => {
               </Overlay>
               <div className="options-container">
                 {product.sizes.map((size) => (
-                  <Button variant={active ? "dark" : "outline-dark"} onClick={()=> {setSize(size); setActive(!active)}}>{size}</Button>
+                  <Button variant={sizeChoice === size ? "dark" : "outline-dark"} onClick={()=> {setSizeChoice(size)}}>{size}</Button>
                 ))}
               </div>
               <p><b>Choose a color:</b></p>
               <div className="options-container">
-                <ColorPicker colors={product.colors} setColor={setColor}></ColorPicker>
+                {product.colors.map((oneColor) => (
+                  <div className="color-choice" style={{backgroundColor: oneColor}} onClick={()=> {setColorChoice(oneColor)}}>
+                    {colorChoice === oneColor && <BsCheck style={oneColor === "white" ? {color: "black"} : {color: "white"}}/>}
+                  </div>
+                ))}
               </div>
             </div>
             <div className="actions-container">
               <Button className="btn-main" id="fav-btn" variant="dark"><BsFillHeartFill/></Button>
-              <Button className="btn-main" id="action-btn" variant="dark">Add to cart<BsBag style={{marginLeft: "6", marginBottom: "5"}} onClick={handleSubmit}/></Button>
+              <Button className="btn-main" id="action-btn" variant="dark">Add to cart<BsBag style={{marginLeft: "6", marginBottom: "5"}} onClick={addCartItem}/></Button>
             </div>
           </div>
         </Col>

@@ -20,7 +20,7 @@ const Navbar = () => {
         <div className="navlinks">
           <NavLink to="/" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'}>Home</NavLink>
           <NavLink to="/bikes" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'}>All bikes</NavLink>
-          <NavLink to="#" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'}> About</NavLink>
+          <NavLink to="/about" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'}> About</NavLink>
         </div>
       </div>
       <div className="navicons">

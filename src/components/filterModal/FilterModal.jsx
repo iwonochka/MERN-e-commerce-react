@@ -24,7 +24,7 @@ const FilterModal = (props) => {
     maxPrice: maxPrice,
     minPrice: minPrice,
   });
- 
+
 
   const newArray = [];
 
@@ -32,17 +32,17 @@ const FilterModal = (props) => {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const keys = Object.keys(filterData);
-    console.log(keys);
-    keys.forEach((key) => {
-      if (filterData[key]) {
-        const output = props.products.map((item)=>
-console.log("data filter oder", filterData )
-            );
-        newArray.push(...output);
-      }
-    });
-    console.log(newArray)
+//     const keys = Object.keys(filterData);
+//     // console.log(keys);
+//     keys.forEach((key) => {
+//       if (filterData[key]) {
+//         const output = props.products.map((item)=>
+// console.log("data filter oder", filterData )
+//             );
+//         newArray.push(...output);
+//       }
+//     });
+//     console.log(newArray)
     // const filteredResult = props.products.filter((product) => {return filterBy("brand", product) && filterBy("category", product) &&
     // filterBy("iseBike", product) && (product.maxPrice <= filterData.maxPrice) && (product.minPrice >= filterData.minPrice) && filterData.colors.some(item=> product.colors.indexOf(item) >= 0) })
 
@@ -52,7 +52,7 @@ console.log("data filter oder", filterData )
   }
 
   function filterBy(keyName, product) {
-    console.log("keyName:", filterData[keyName]);
+    // console.log("keyName:", filterData[keyName]);
     if (filterData[keyName] !== null) {
       return product[keyName] === filterData[keyName];
     } else {
