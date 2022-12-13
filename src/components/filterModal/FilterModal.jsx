@@ -15,14 +15,18 @@ const FilterModal = (props) => {
   const colors = [...new Set(props.products.flatMap(({ colors }) => colors))];
   const minPrice = Math.min(...props.products.map((item) => item.price));
   const maxPrice = Math.max(...props.products.map((item) => item.price));
+  const [show, setShow] = useState(true)
+  const handleClose = () => setShow(false);
+
 
   const [filterData, setFilterData] = useState({
+    // console.log(minItemPrice)
     brand: null,
-    category: null,
-    iseBike: null,
+    subcategory: null,
+    isEbike: null,
     dataColors: [],
-    maxPrice: maxPrice,
-    minPrice: minPrice,
+    maxItemPrice: 2485,
+    minItemPrice: 734
   });
 
 
@@ -31,24 +35,32 @@ const FilterModal = (props) => {
 
 
   function handleSubmit(event) {
-    event.preventDefault();
-//     const keys = Object.keys(filterData);
-//     // console.log(keys);
-//     keys.forEach((key) => {
-//       if (filterData[key]) {
-//         const output = props.products.map((item)=>
-// console.log("data filter oder", filterData )
-//             );
-//         newArray.push(...output);
-//       }
-//     });
-//     console.log(newArray)
-    // const filteredResult = props.products.filter((product) => {return filterBy("brand", product) && filterBy("category", product) &&
-    // filterBy("iseBike", product) && (product.maxPrice <= filterData.maxPrice) && (product.minPrice >= filterData.minPrice) && filterData.colors.some(item=> product.colors.indexOf(item) >= 0) })
 
-    // console.log("filtered result", filteredResult)
-    //set products to filtered products
-    setFilterData({});
+    handleClose()
+    event.preventDefault();
+    console.log("filterdata at the beginning:", filterData)
+    console.log("products", props.products)
+    const filteredResult = props.products.filter((product) => {
+      console.log(filterData)
+      return filterBy("brand", product) &&
+      filterBy("subcategory", product) &&
+      filterBy("isEbike", product) &&
+      (product.price <= filterData.maxItemPrice) &&
+      (product.price >= filterData.minItemPrice) &&
+      (filterData.dataColors.length > 0 ? filterData.dataColors.some(item=> product.colors.indexOf(item) >= 0) : true)
+    })
+    console.log("result", filteredResult)
+    props.setFilteredProducts(filteredResult)
+
+    setFilterData({
+      brand: null,
+      subcategory: null,
+      isEbike: null,
+      dataColors: [],
+      maxItemPrice: 2485,
+      minItemPrice: 734
+    })
+
   }
 
   function filterBy(keyName, product) {
@@ -56,7 +68,7 @@ const FilterModal = (props) => {
     if (filterData[keyName] !== null) {
       return product[keyName] === filterData[keyName];
     } else {
-      return null;
+      return true;
     }
   }
 
@@ -72,17 +84,18 @@ const FilterModal = (props) => {
             (color) => color !== e.target.value
           ),
         });
+
   };
   const handleeBike = (e) => {
     e.target.checked
-      ? setFilterData({ ...filterData, iseBike: true })
-      : setFilterData({ ...filterData, iseBike: false });
+      ? setFilterData({ ...filterData, isEbike: true })
+      : setFilterData({ ...filterData, isEbike: false });
   };
 
   useEffect(() => {}, [filterData]);
 
   return (
-    <Modal
+    <Modal show={show}
       {...props}
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
@@ -110,7 +123,7 @@ const FilterModal = (props) => {
             <Form.Select
               aria-label="category"
               onChange={(e) =>
-                setFilterData({ ...filterData, category: e.target.value })
+                setFilterData({ ...filterData, subcategory: e.target.value })
               }
             >
               <option>Category</option>
@@ -140,7 +153,7 @@ const FilterModal = (props) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="dark" type="submit">
+          <Button variant="dark" type="submit" onClick={handleClose}>
             Filter
           </Button>
         </Modal.Footer>

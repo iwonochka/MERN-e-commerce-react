@@ -27,7 +27,7 @@ const Slider = ({minPrice, maxPrice, setFilterData, filterData}) => {
           onChange={([min, max]) => {
             setMin(min);
             setMax(max);
-            setFilterData({ ...filterData, minPrice: min, maxPrice: max });
+            setFilterData({ ...filterData, minItemPrice: min, maxItemPrice: max });
           }}
         />
         <div className="values-wrapper">

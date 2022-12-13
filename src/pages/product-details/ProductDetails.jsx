@@ -41,15 +41,22 @@ const ProductDetails = (props) => {
     getProduct();
   }, [] );
 
+  function updateTotal(updatedCartItems) {
+    return updatedCartItems.reduce((acc, item) => {
+      // console.log("acc", acc, "item.product.price", item.product.price)
+      return acc + item.product.price}, 0)
+  }
+
   function addCartItem() {
     const newItem = {
       product: product,
       sizeChoice: sizeChoice,
       colorChoice: colorChoice
     }
-    props.setCartItems([...props.cartItems, newItem])
-    console.log("cartItems:" , props.cartItems, "newItem:", newItem)
-    //  how to pass props??
+    const updatedCartItems = [...props.cartItems, newItem]
+    props.setCartItems(updatedCartItems)
+    console.log(props.cartItems)
+    props.setTotal(updateTotal(updatedCartItems))
   }
 
   return (
@@ -73,7 +80,7 @@ const ProductDetails = (props) => {
             <div className="product-description-2">
               <p>Producer: {product.brand}</p>
               <p>Gears: {product.gears}</p>
-              <p><b>Choose a size:</b><AiFillQuestionCircle style={{marginLeft: "6", marginBottom: "5"}} ref={target} onMouseEnter={() => setShow(show)} onMouseLeave={() => setShow(!show)}/></p>
+              <p><b>Choose a size:</b><AiFillQuestionCircle style={{marginLeft: "6", marginBottom: "5"}} onMouseEnter={() => setShow(show)} onMouseLeave={() => setShow(!show)}/></p>
 
               <Overlay target={target.current} show={show} placement="right">
                 {(props) => (
@@ -98,7 +105,7 @@ const ProductDetails = (props) => {
             </div>
             <div className="actions-container">
               <Button className="btn-main" id="fav-btn" variant="dark"><BsFillHeartFill/></Button>
-              <Button className="btn-main" id="action-btn" variant="dark">Add to cart<BsBag style={{marginLeft: "6", marginBottom: "5"}} onClick={addCartItem}/></Button>
+              <Button className="btn-main" id="action-btn" variant="dark" onClick={addCartItem}>Add to cart<BsBag style={{marginLeft: "6", marginBottom: "5"}} /></Button>
             </div>
           </div>
         </Col>
