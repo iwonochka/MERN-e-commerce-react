@@ -56,7 +56,7 @@ const Products = () => {
       <section className="search-section">
         <Searchbar setQuery={setQuery}/>
         <Button variant="outline-dark" onClick={() => setModalShow(true)}>Filter</Button>
-        <FilterModal show={modalShow} onHide={() => setModalShow(false)} products={products} filteredProducts={filteredProducts} setFilteredProducts={setFilteredProducts}/>
+        <FilterModal show={modalShow} onHide={() => setModalShow(false)} setModalShow={setModalShow} products={products} filteredProducts={filteredProducts} setFilteredProducts={setFilteredProducts}/>
         <SortDropdown products={products} setProducts={setProducts} getAllProducts={getAllProducts} />
       </section>
 
