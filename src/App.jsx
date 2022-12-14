@@ -12,6 +12,7 @@ import { useState, useContext } from "react";
 import Payment from "./pages/payment/Payment";
 import { AuthContext } from "../src/context/auth.context";
 import Favs from "./pages/favs/Favs";
+import MyOrders from "./pages/my-orders/MyOrders";
 import axios from "axios";
 
 function App() {
@@ -86,9 +87,6 @@ function App() {
       .catch((error) => console.log(error));
   };
 
-  const updateFavs = () => {
-    // getFavs()
-  };
 
   return (
     <div className="App">
@@ -132,6 +130,7 @@ function App() {
           path="/favs"
           element={<Favs favs={favs} deleteFav={deleteFav} getFavs={getFavs} />}
         />
+        <Route path="/myOrders" element={<MyOrders total={total} />} />
       </Routes>
     </div>
   );

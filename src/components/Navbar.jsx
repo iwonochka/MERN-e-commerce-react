@@ -37,7 +37,7 @@ const Navbar = (cartItems) => {
           <Dropdown.Toggle variant="dark" id="dropdown-basic"><FiUserCheck style={{width: 20}}/></Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item href="#/action-1">My orders</Dropdown.Item>
+            <Dropdown.Item href="/myOrders">My orders</Dropdown.Item>
             <Dropdown.Item href="/" onClick={logOutUser}>Logout</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown> :

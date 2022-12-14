@@ -29,30 +29,24 @@ const Cart = (props) => {
     props.updateTotal(newCartItems)
   }
 
-
-  function handleOrder() {
-    const newOrder = {
-          items: props.cartItems,
-          user: user,
-          isPaid: false
-        }
-    setOrder(newOrder)
-    setProceed(true)
-    }
-
-    function createOrder(newOrder) {
+    function createOrder() {
+      const newOrder = {
+        items: props.cartItems,
+        user: user,
+        isPaid: false,
+        amount: props.total
+      }
       const requestBody = { newOrder };
       axios
         .post(`${process.env.REACT_APP_API_URL}/api/createOrder`, requestBody)
         .then((res) => {
           console.log("createOrder res:", res)
+          setProceed(true)
         })
         .catch((error) => {
           console.log(error.response.data.message)
         });
     }
-
-    
 
 
   return (
@@ -67,7 +61,7 @@ const Cart = (props) => {
         </div>
       ))}
       <p>{props.total} €</p>
-      {!proceed && <button onClick={handleOrder}> Confirm and proceed to payment</button>}
+      {!proceed && <button onClick={createOrder}> Confirm and proceed to payment</button>}
       {proceed &&
         <Payment order={order}/>
       }
