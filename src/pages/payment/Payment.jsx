@@ -6,7 +6,7 @@ const Payment = () => {
   return (
     <div>
       <PayPalScriptProvider options={{"client-id": process.env.REACT_APP_PAY_PAL_CLIENT_ID}}>
-        <PayPalButtons style={{ layout: "horizontal" }}
+        <PayPalButtons style={{ color: 'black', shape: 'rect',  label: 'paypal', layout: 'vertical' }}
 
           createOrder={(data, actions) => {
             return actions.order
@@ -41,3 +41,5 @@ const Payment = () => {
 }
 
 export default Payment
+
+

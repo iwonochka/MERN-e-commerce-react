@@ -10,8 +10,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 import logo from '../assets/vellox.png'
 
-const Navbar = () => {
-  const { isLoggedIn, user, logOutUser } = useContext(AuthContext);
+const Navbar = (cartItems) => {
+  const { isLoggedIn, logOutUser } = useContext(AuthContext);
 
   return (
     <nav>
@@ -24,8 +24,14 @@ const Navbar = () => {
         </div>
       </div>
       <div className="navicons">
-        <BsFillHeartFill/>
-        <NavLink to="/cart" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'}><BsBag/></NavLink>
+      <NavLink to="/favs"><BsFillHeartFill/></NavLink>
+        <NavLink to="/cart" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'} >
+          <BsBag id="cart-icon" />
+          <div className="amount-indicator">
+            {cartItems.length && <p>4</p>}
+          </div>
+        </NavLink>
+
         {isLoggedIn ?
           <Dropdown>
           <Dropdown.Toggle variant="dark" id="dropdown-basic"><FiUserCheck style={{width: 20}}/></Dropdown.Toggle>

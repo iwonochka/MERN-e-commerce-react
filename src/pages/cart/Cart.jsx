@@ -1,7 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
-import axios from "axios";
-import { useNavigate } from 'react-router-dom';
 import Payment from "../payment/Payment";
 
 
@@ -22,11 +20,12 @@ const Cart = (props) => {
   }, []);
 
   const {user} = useContext(AuthContext)
-  const navigate = useNavigate()
+
 
   function deleteCartItem(cartItem) {
     const newCartItems = props.cartItems.filter((item) => item !== cartItem )
     props.setCartItems(newCartItems)
+    props.updateTotal(newCartItems)
   }
 
 

@@ -48,3 +48,19 @@ nav {
   color: #fff;
   box-shadow: inset 200px 0 0 0 black;;
 }
+
+#cart-icon{
+  position:relative
+}
+.amount-indicator {
+  position: absolute;
+  top: 2rem;
+  right: 7.4rem;
+  border-radius: 50%;
+  background: red;
+  font-size: 0.4rem;
+  color: white;
+  height: 0.8rem;
+  width: 0.8rem;
+  justify-content: center;
+}
