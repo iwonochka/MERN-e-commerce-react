@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../../context/auth.context";
 import Payment from "../payment/Payment";
+import axios from "axios";
 
 
 const Cart = (props) => {
@@ -32,22 +33,26 @@ const Cart = (props) => {
   function handleOrder() {
     const newOrder = {
           items: props.cartItems,
-          user: user
+          user: user,
+          isPaid: false
         }
     setOrder(newOrder)
     setProceed(true)
-
-    // const requestBody = { newOrder };
-    // axios
-    //   .post(`${process.env.REACT_APP_API_URL}/api/order`, requestBody)
-    //   .then((res) => {
-    //     console.log("createOrder res:", res)
-    //     navigate('/payment');
-    //   })
-    //   .catch((error) => {
-    //     console.log(error.response.data.message)
-    //   });
     }
+
+    function createOrder(newOrder) {
+      const requestBody = { newOrder };
+      axios
+        .post(`${process.env.REACT_APP_API_URL}/api/createOrder`, requestBody)
+        .then((res) => {
+          console.log("createOrder res:", res)
+        })
+        .catch((error) => {
+          console.log(error.response.data.message)
+        });
+    }
+
+    
 
 
   return (
@@ -62,7 +67,7 @@ const Cart = (props) => {
         </div>
       ))}
       <p>{props.total} €</p>
-      {!proceed && <button onClick={handleOrder}>Proceed to checkout</button>}
+      {!proceed && <button onClick={handleOrder}> Confirm and proceed to payment</button>}
       {proceed &&
         <Payment order={order}/>
       }

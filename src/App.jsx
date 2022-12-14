@@ -10,7 +10,7 @@ import ProductDetails from "./pages/product-details/ProductDetails";
 import About from "./pages/about/About";
 import { useState, useContext } from "react";
 import Payment from "./pages/payment/Payment";
-import { AuthContext } from '../src/context/auth.context';
+import { AuthContext } from "../src/context/auth.context";
 import Favs from "./pages/favs/Favs";
 import axios from "axios";
 
@@ -18,58 +18,68 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
   const [favs, setFavs] = useState([]);
-  const {user} = useContext(AuthContext)
-  const navigate = useNavigate()
-
-
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   function addCartItem(product, sizeChoice, colorChoice) {
     const newItem = {
       product: product,
       sizeChoice: sizeChoice,
-      colorChoice: colorChoice
-    }
-    const updatedCartItems = [...cartItems, newItem]
-    setCartItems(updatedCartItems)
-    console.log(cartItems)
-    updateTotal(updatedCartItems)
+      colorChoice: colorChoice,
+    };
+    const updatedCartItems = [...cartItems, newItem];
+    setCartItems(updatedCartItems);
+    console.log(cartItems);
+    updateTotal(updatedCartItems);
   }
 
   function updateTotal(items) {
     const sum = items.reduce((acc, item) => {
       // console.log("acc", acc, "item.product.price", item.product.price)
-      return acc + item.product.price}, 0)
-    setTotal(sum)
+      return acc + item.product.price;
+    }, 0);
+    setTotal(sum);
   }
 
   function handleFavs(product) {
     if (user) {
-      console.log(favs)
-      favs.includes(product) ? deleteFav(product) : addFav(product)
+      console.log(favs);
+      favs.includes(product) ? deleteFav(product) : addFav(product);
     } else {
-      navigate("/login")
+      navigate("/login");
     }
   }
 
   const addFav = (product) => {
-    const newFavs = [...favs, product]
-    setFavs(newFavs)
-    console.log("new", newFavs)
-    updateFavs(newFavs)
-  }
+    const requestBody = { product, user };
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/api/addFavs`, requestBody)
+      .then((res) => {
+        console.log("Sent data from addFav to POST addFavs");
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+      });
+  };
 
   const deleteFav = (product) => {
-    const newFavs = favs.filter((fav) => fav !== product )
-    setFavs(newFavs)
-    updateFavs(newFavs)
-  }
+    const requestBody = { product, user };
+    axios
+      .post(`${process.env.REACT_APP_API_URL}/api/deleteFavs`, requestBody)
+      .then((res) => {
+        getFavs()
+      })
+      .catch((error) => {
+        console.log(error.response.data.message);
+      });
+      getFavs()
+  };
   const getFavs = () => {
-    console.log("hello")
-    console.log("url", `${process.env.REACT_APP_API_URL}/api/favs/${user._id}`)
+    console.log("url", `${process.env.REACT_APP_API_URL}/api/favs/${user._id}`);
     axios
       .get(`${process.env.REACT_APP_API_URL}/api/favs/${user._id}`)
       .then((response) => {
-        console.log("response data favs", response.data.favs)
+        console.log("response data favs", response.data.favs);
 
         setFavs(response.data.favs);
       })
@@ -77,18 +87,8 @@ function App() {
   };
 
   const updateFavs = () => {
-    const requestBody = {favs, user};
-    axios
-      .post(`${process.env.REACT_APP_API_URL}/api/updateFavs`, requestBody)
-      .then((res) => {
-        console.log("Sent data from updateFavs to POST updateFavs")
-      })
-      .catch((error) => {
-        console.log(error.response.data.message)
-      });
-      // getFavs()
+    // getFavs()
   };
-
 
   return (
     <div className="App">
@@ -96,7 +96,10 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<About />} />
-        <Route path="/bikes" element={<Products handleFavs={handleFavs} favs={favs} />} />
+        <Route
+          path="/bikes"
+          element={<Products handleFavs={handleFavs} favs={favs} />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route
@@ -125,7 +128,10 @@ function App() {
           }
         />
         <Route path="/payment" element={<Payment />} />
-        <Route path="/favs" element={<Favs favs={favs} deleteFav={deleteFav} getFavs={getFavs}/>} />
+        <Route
+          path="/favs"
+          element={<Favs favs={favs} deleteFav={deleteFav} getFavs={getFavs} />}
+        />
       </Routes>
     </div>
   );
