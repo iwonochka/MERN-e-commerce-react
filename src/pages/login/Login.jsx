@@ -1,26 +1,38 @@
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import './Login.css'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from "axios";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/auth.context';
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [message, setMessage] = useState("");
+  const { storeToken, authenticateUser } = useContext(AuthContext);
+  const navigate = useNavigate()
 
   function handleSubmit(e) {
     e.preventDefault();
 
     const requestBody = { email, password };
     axios
-      .post(`${process.env.REACT_APP_API_URL}/api/login`, requestBody)
-      .then((response) => {
+      .post(`${process.env.REACT_APP_API_URL}/auth/login`, requestBody)
+      .then((res) => {
         setEmail("");
         setPassword("");
+        storeToken(res.data.authToken);
+        authenticateUser();
+        navigate('/');
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        const errorDescription = error.response.data.message;
+        setMessage(errorDescription);
+      });
   };
 
 
@@ -43,6 +55,11 @@ const Login = () => {
             Log in
           </Button>
         </Form>
+        {message &&
+        <div>
+          <p>{message}</p>
+          <p>You'll be redirected to login page in ... s</p>
+        </div>}
       </Col>
       <Col sm={12} md={6} lg={6} gap={5}>
         <section>

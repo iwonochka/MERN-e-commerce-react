@@ -2,12 +2,14 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useState } from 'react';
 import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState(undefined);
+  const navigate = useNavigate()
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -15,11 +17,14 @@ const Signup = () => {
     axios
       .post(`${process.env.REACT_APP_API_URL}/auth/signup`, requestBody)
       .then((res) => {
-        setMessage(res.data.message)
         setEmail("");
         setPassword("");
+        navigate('/login')
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        const errorDescription = error.response.data.message;
+        setMessage(errorDescription);
+      });
   };
 
   function redirectMessage(message) {
@@ -46,7 +51,7 @@ const Signup = () => {
         <Form.Text className="text-muted">
           At least 6 characters and 1 special sign
         </Form.Text>
-        <Button variant="primary" type="submit">
+        <Button variant="dark" type="submit">
           Create account
         </Button>
       </Form>
@@ -55,6 +60,7 @@ const Signup = () => {
           <p>{message}</p>
           <p>You'll be redirected to login page in ... s</p>
         </div>}
+        <Button href="/login" variant="dark">Back to Login</Button>
     </main>
   )
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -10,33 +10,54 @@ import {AiFillQuestionCircle} from "react-icons/ai"
 import Button from 'react-bootstrap/Button';
 import Overlay from 'react-bootstrap/Overlay';
 import Tooltip from 'react-bootstrap/Tooltip';
-import ColorPicker from "../../components/color-picker/ColorPicker";
 import { BsFillHeartFill } from "react-icons/bs";
 import { BsBag } from "react-icons/bs";
+import { BsCheck } from "react-icons/bs";
 
 
-const ProductDetails = () => {
+
+const ProductDetails = (props) => {
 
   const [product, setProduct] = useState(null);
   const { productId } = useParams();
   // console.log(productId)
   const [show, setShow] = useState(false);
+  const [colorChoice, setColorChoice] = useState("")
+  const [sizeChoice, setSizeChoice] = useState("")
+
   const target = useRef(null);
+  const navigate = useNavigate();
 
   const getProduct = () => {
 
     axios.get(`${process.env.REACT_APP_API_URL}/api/products/${productId}`)
     .then((response) => {
       const oneProduct = response.data;
-      console.log("response data", response.data)
       setProduct(oneProduct);
     })
     .catch((error) => console.log(error));
   };
-
   useEffect(()=> {
     getProduct();
   }, [] );
+
+  function updateTotal(updatedCartItems) {
+    return updatedCartItems.reduce((acc, item) => {
+      // console.log("acc", acc, "item.product.price", item.product.price)
+      return acc + item.product.price}, 0)
+  }
+
+  function addCartItem() {
+    const newItem = {
+      product: product,
+      sizeChoice: sizeChoice,
+      colorChoice: colorChoice
+    }
+    const updatedCartItems = [...props.cartItems, newItem]
+    props.setCartItems(updatedCartItems)
+    console.log(props.cartItems)
+    props.setTotal(updateTotal(updatedCartItems))
+  }
 
   return (
   <div>
@@ -59,7 +80,7 @@ const ProductDetails = () => {
             <div className="product-description-2">
               <p>Producer: {product.brand}</p>
               <p>Gears: {product.gears}</p>
-              <p><b>Choose a size:</b><AiFillQuestionCircle style={{marginLeft: "6", marginBottom: "5"}} ref={target} onMouseEnter={() => setShow(show)} onMouseLeave={() => setShow(!show)}/></p>
+              <p><b>Choose a size:</b><AiFillQuestionCircle style={{marginLeft: "6", marginBottom: "5"}} onMouseEnter={() => setShow(show)} onMouseLeave={() => setShow(!show)}/></p>
 
               <Overlay target={target.current} show={show} placement="right">
                 {(props) => (
@@ -68,20 +89,23 @@ const ProductDetails = () => {
                   </Tooltip>
                 )}
               </Overlay>
-
               <div className="options-container">
                 {product.sizes.map((size) => (
-                  <Button variant="outline-dark">{size}</Button>
+                  <Button variant={sizeChoice === size ? "dark" : "outline-dark"} onClick={()=> {setSizeChoice(size)}}>{size}</Button>
                 ))}
               </div>
               <p><b>Choose a color:</b></p>
               <div className="options-container">
-                <ColorPicker colors={product.colors}></ColorPicker>
+                {product.colors.map((oneColor) => (
+                  <div className="color-choice" style={{backgroundColor: oneColor}} onClick={()=> {setColorChoice(oneColor)}}>
+                    {colorChoice === oneColor && <BsCheck style={oneColor === "white" ? {color: "black"} : {color: "white"}}/>}
+                  </div>
+                ))}
               </div>
             </div>
             <div className="actions-container">
               <Button className="btn-main" id="fav-btn" variant="dark"><BsFillHeartFill/></Button>
-              <Button className="btn-main" id="action-btn" variant="dark">Add to cart<BsBag style={{marginLeft: "6", marginBottom: "5"}}/></Button>
+              <Button className="btn-main" id="action-btn" variant="dark" onClick={addCartItem}>Add to cart<BsBag style={{marginLeft: "6", marginBottom: "5"}} /></Button>
             </div>
           </div>
         </Col>

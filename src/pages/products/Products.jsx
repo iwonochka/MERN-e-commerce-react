@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import './Products.css';
 import { BsFillHeartFill } from "react-icons/bs";
@@ -20,15 +20,20 @@ const Products = () => {
   const [isClicked, setIsClicked] = useState(false);
   const [query, setQuery] = useState("")
   const [modalShow, setModalShow] = useState(false);
+  const [filteredProducts, setFilteredProducts] = useState(products);
 
   const getAllProducts = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}/api/products`)
-      .then((response) => setProducts(response.data))
+      .then((response) => {
+        setProducts(response.data)
+        setFilteredProducts(response.data)
+      })
       .catch((error) => console.log(error));
   };
 
   useEffect(() => {
+    count.current = count.current + 2
     getAllProducts();
   }, [] );
 
@@ -36,11 +41,12 @@ const Products = () => {
     setIsClicked(!isClicked)
   }
 
-  const filteredProducts = products.filter(product => {
+  const searchedProducts = filteredProducts.filter(product => {
     return product.model.toLowerCase().includes(query.toLowerCase());
   });
 
-
+  const count = useRef(2)
+  console.log(count)
 
   return (
     <div className="Products">
@@ -50,13 +56,13 @@ const Products = () => {
       <section className="search-section">
         <Searchbar setQuery={setQuery}/>
         <Button variant="outline-dark" onClick={() => setModalShow(true)}>Filter</Button>
-        <FilterModal show={modalShow} onHide={() => setModalShow(false)} products={products}/>
+        <FilterModal show={modalShow} onHide={() => setModalShow(false)} setModalShow={setModalShow} products={products} filteredProducts={filteredProducts} setFilteredProducts={setFilteredProducts}/>
         <SortDropdown products={products} setProducts={setProducts} getAllProducts={getAllProducts} />
       </section>
 
       <Container>
         <Row>
-        {filteredProducts.map((product) => {
+        {searchedProducts?.map((product) => {
           return (
             <Col sm={12} md={4} lg={4} className="product-card" key={product._id} onMouseEnter={()=> {setHoveredOn(product._id)}} onMouseLeave={()=> {setHoveredOn("")}}>
               <Link to={`/bikes/${product._id}`} >

@@ -11,6 +11,7 @@ const Slider = ({minPrice, maxPrice, setFilterData, filterData}) => {
     <ReactSlider
           defaultValue={[minPrice, maxPrice]}
           className="slider"
+          value={[min, max]}
           trackClassName="tracker"
           min={minPrice}
           max={maxPrice}
@@ -26,7 +27,7 @@ const Slider = ({minPrice, maxPrice, setFilterData, filterData}) => {
           onChange={([min, max]) => {
             setMin(min);
             setMax(max);
-            setFilterData({ ...filterData, minPrice: min, maxPrice: max });
+            setFilterData({ ...filterData, minItemPrice: min, maxItemPrice: max });
           }}
         />
         <div className="values-wrapper">

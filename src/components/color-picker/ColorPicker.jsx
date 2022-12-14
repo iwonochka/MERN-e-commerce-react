@@ -1,7 +1,6 @@
 
 
 const ColorPicker = (props) => {
-  console.log(props.colors)
   return (
     <>
     {props.colors && props.colors.map((color) => (
