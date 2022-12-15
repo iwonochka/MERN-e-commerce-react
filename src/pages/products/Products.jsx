@@ -1,4 +1,4 @@
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import "./Products.css";
 import { BsFillHeartFill } from "react-icons/bs";
@@ -10,35 +10,22 @@ import FilterModal from "../../components/filterModal/FilterModal";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import "../product-details/ProductDetails.css";
 // import { useNavigate } from 'react-router-dom';
 // import { AuthContext } from '../../context/auth.context';
 
 const Products = (props) => {
-  const [products, setProducts] = useState([]);
   const [hoveredOn, setHoveredOn] = useState("");
   // const [isFav, setIsFav] = useState(false);
   const [query, setQuery] = useState("");
   const [modalShow, setModalShow] = useState(false);
-  const [filteredProducts, setFilteredProducts] = useState(products);
-
-  const getAllProducts = () => {
-    axios
-      .get(`${process.env.REACT_APP_API_URL}/api/products`)
-      .then((response) => {
-        setProducts(response.data);
-        setFilteredProducts(response.data);
-      })
-      .catch((error) => console.log(error));
-  };
-
-  useEffect(() => {
-    getAllProducts();
-  }, []);
 
 
-  const searchedProducts = filteredProducts.filter((product) => {
+
+  const searchedProducts = props.filteredProducts.filter((product) => {
     return product.model.toLowerCase().includes(query.toLowerCase());
   });
+
 
 
   return (
@@ -55,14 +42,14 @@ const Products = (props) => {
           show={modalShow}
           onHide={() => setModalShow(false)}
           setModalShow={setModalShow}
-          products={products}
-          filteredProducts={filteredProducts}
-          setFilteredProducts={setFilteredProducts}
+          products={props.products}
+          filteredProducts={props.filteredProducts}
+          setFilteredProducts={props.setFilteredProducts}
         />
         <SortDropdown
-          products={products}
-          setProducts={setProducts}
-          getAllProducts={getAllProducts}
+          products={props.products}
+          setProducts={props.setProducts}
+          getAllProducts={props.getAllProducts}
         />
       </section>
 
@@ -102,12 +89,18 @@ const Products = (props) => {
                 </div>
                 {hoveredOn === product._id && (
                   <div className="card-icons">
-                    <BsFillHeartFill
+                    <Button
+                      className="btn-main fav-btn"
+                      id="fav-products"
+                      variant="outline-light"
                       onClick={() => {
                         props.handleFavs(product);
                       }}
-                      className="card-icon"
-                    />
+                    >
+                      <BsFillHeartFill
+                        className={props.isFav(product) ? "fav-color" : ""}
+                      />
+                    </Button>
                   </div>
                 )}
               </Col>
@@ -115,26 +108,6 @@ const Products = (props) => {
           })}
         </Row>
       </Container>
-      {/*
-      <section className="products-grid">
-        {filteredProducts.map((product) => {
-          return (
-            <div className="product-card" key={product._id} onMouseEnter={()=> {setHoveredOn(product._id)}} onMouseLeave={()=> {setHoveredOn("")}}>
-              <img id="product-card-img" src={product.image} alt={product.model} />
-              <div>
-                <h5 className={hoveredOn === product._id && "card-title-dark"}>{product.model}</h5>
-                <p id="card-price">{product.price} €</p>
-              </div>
-              {hoveredOn === product._id &&
-                <div>
-                  <BsFillHeartFill onClick={handleClick} style={{color: isClicked ? 'red' : 'black'}}/>
-                  <BsBagPlusFill/>
-                </div>
-              }
-            </div>
-          );
-        })}
-      </section> */}
     </div>
   );
 };

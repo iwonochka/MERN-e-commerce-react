@@ -14,7 +14,7 @@ import {AiOutlineCheckCircle} from "react-icons/ai";
 
 
 const Cart = (props) => {
-  console.log("cart items:", props.cartItems)
+  // console.log("cart items:", props.cartItems)
   const [order, setOrder] = useState({})
   const [proceed, setProceed] = useState(false)
   const [checkoutData, setCheckoutData] = useState({
@@ -30,7 +30,7 @@ const Cart = (props) => {
     localStorage.setItem("cart-items", JSON.stringify(props.cartItems));
     // getting back the object
     props.setCartItems(JSON.parse(localStorage.getItem("cart-items")));
-    console.log("cart-items from storage:", JSON.parse(localStorage.getItem("cart-items")))
+    // console.log("cart-items from storage:", JSON.parse(localStorage.getItem("cart-items")))
   }
 
   useEffect(() => {
@@ -59,7 +59,7 @@ const Cart = (props) => {
       axios
         .post(`${process.env.REACT_APP_API_URL}/api/createOrder`, requestBody)
         .then((res) => {
-          console.log("createOrder res:", res)
+          // console.log("createOrder res:", res)
           setProceed(true)
         })
         .catch((error) => {
@@ -70,93 +70,106 @@ const Cart = (props) => {
 
   return (
     <main className="cart-wrap-relative">
-      <div className="cart-container">
-        <div className="cart-cards-container">
-          {props.cartItems && props.cartItems.map((cartItem) => (
-            <div className="horizontal-card">
-              <img className="horizontal-card-img" src={cartItem.product.images[0]} alt={cartItem.product.model} />
-              <div className="cart-details">
-                <div className="cart-details-top">
-                  <h5>{cartItem.product.model}</h5>
-                  <p className="cart-brand"><b>{cartItem.product.brand}</b></p>
+      {props.cartItems.length > 0 ?
+      <Row>
+        <Col sm={12} md={12} lg={6}>
+          <div className="cart-container">
+            <div className="cart-cards-container">
+              {props.cartItems && props.cartItems.map((cartItem) => (
+                <div className="horizontal-card">
+                  <img className="horizontal-card-img" src={cartItem.product.images[0]} alt={cartItem.product.model} />
+                  <div className="cart-details">
+                    <div className="cart-details-top">
+                      <h5>{cartItem.product.model}</h5>
+                      <p className="cart-brand"><b>{cartItem.product.brand}</b></p>
+                    </div>
+                    <div className="cart-details-bottom">
+                      <p>size : {cartItem.sizeChoice}</p>
+                      <p>color : {cartItem.colorChoice}</p>
+                    </div>
+                  </div>
+                  <h5 className="cart-price">{cartItem.product.price} €</h5>
+                  <Button className="cart-delete-btn" variant="dark" onClick={()=> {deleteCartItem(cartItem)}}><MdOutlineCancel/></Button>
                 </div>
-                <div className="cart-details-bottom">
-                  <p>size : {cartItem.sizeChoice}</p>
-                  <p>color : {cartItem.colorChoice}</p>
+              ))}
+              </div>
+            </div>
+            <p>TOTAL : <b>{props.total} €</b> </p>
+        </Col>
+        <Col sm={12} md={12} lg={6}>
+          {(!proceed && props.cartItems.length > 0) &&
+            <Form onSubmit={createOrder} className="checkout-form">
+              <Row className="mb-3">
+                <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridEmail">
+                  <Form.Label>Name</Form.Label>
+                  <Form.Control type="text" placeholder="Enter name" onChange={(e) =>
+                        setCheckoutData({ ...checkoutData, name: e.target.value })
+                      } />
+                </Form.Group>
+
+                <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridPassword">
+                  <Form.Label>Surname</Form.Label>
+                  <Form.Control type="text" placeholder="Surname" onChange={(e) =>
+                        setCheckoutData({ ...checkoutData, surname: e.target.value })
+                      } />
+                </Form.Group>
+              </Row>
+              <Row className="mb-3">
+
+              <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridPassword">
+                  <Form.Label>Phone nr</Form.Label>
+                  <Form.Control type="number" placeholder="Phone nr" onChange={(e) =>
+                        setCheckoutData({ ...checkoutData, phone: e.target.value })
+                      } />
+                </Form.Group>
+
+              <Form.Group as={Col} sm={12} md={6} lg={6} className="mb-3" controlId="formGridAddress1">
+                <Form.Label>Address</Form.Label>
+                <Form.Control placeholder="1234 Main St" onChange={(e) =>
+                  setCheckoutData({ ...checkoutData, address: e.target.value })}/>
+              </Form.Group>
+
+              </Row>
+
+              <Row className="mb-3">
+                <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridCity">
+                  <Form.Label>City</Form.Label>
+                  <Form.Control onChange={(e) =>
+                  setCheckoutData({ ...checkoutData, city: e.target.value })}/>
+                </Form.Group>
+
+                <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridZip">
+                  <Form.Label>Zip Code</Form.Label>
+                  <Form.Control onChange={(e) =>
+                  setCheckoutData({ ...checkoutData, zipCode: e.target.value })} />
+                </Form.Group>
+              </Row>
+                <Form.Group as={Col} className="mb-3" id="formGridCheckbox">
+                  <Form.Check type="checkbox" label="Create an account" />
+                </Form.Group>
+              <Button className="mt-3 mb-3" variant="dark" type="submit">
+                Confirm and proceed to payment
+              </Button>
+            </Form>
+          }
+          {proceed &&
+            <div className="payment-container">
+              <div className="payment-btn">
+                <AiOutlineCheckCircle/>
+                <div>
+                  <p>Order confirmed</p>
+                  <p> Choose payment</p>
                 </div>
               </div>
-              <h5 className="cart-price">{cartItem.product.price} €</h5>
-              <Button className="cart-delete-btn" variant="dark" onClick={()=> {deleteCartItem(cartItem)}}><MdOutlineCancel/></Button>
+
+              <Payment order={order}/>
             </div>
-          ))}
+          }
 
-        </div>
-        <p>TOTAL : <b>{props.total} €</b> </p>
-        {(!proceed && props.cartItems.length > 0) &&
-          <Form onSubmit={createOrder} className="checkout-form">
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formGridEmail">
-                <Form.Label>Name</Form.Label>
-                <Form.Control type="text" placeholder="Enter name" onChange={(e) =>
-                      setCheckoutData({ ...checkoutData, name: e.target.value })
-                    } />
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Label>Surname</Form.Label>
-                <Form.Control type="text" placeholder="Surname" onChange={(e) =>
-                      setCheckoutData({ ...checkoutData, surname: e.target.value })
-                    } />
-              </Form.Group>
-            </Row>
-            <Row className="mb-3">
-
-            <Form.Group as={Col} controlId="formGridPassword">
-                <Form.Label>Phone nr</Form.Label>
-                <Form.Control type="number" placeholder="Phone nr" onChange={(e) =>
-                      setCheckoutData({ ...checkoutData, phone: e.target.value })
-                    } />
-              </Form.Group>
-
-            <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
-              <Form.Label>Address</Form.Label>
-              <Form.Control placeholder="1234 Main St" onChange={(e) =>
-                setCheckoutData({ ...checkoutData, address: e.target.value })}/>
-            </Form.Group>
-
-            </Row>
-
-            <Row className="mb-3">
-              <Form.Group as={Col} controlId="formGridCity">
-                <Form.Label>City</Form.Label>
-                <Form.Control onChange={(e) =>
-                setCheckoutData({ ...checkoutData, city: e.target.value })}/>
-              </Form.Group>
-
-              <Form.Group as={Col} controlId="formGridZip">
-                <Form.Label>Zip Code</Form.Label>
-                <Form.Control onChange={(e) =>
-                setCheckoutData({ ...checkoutData, zipCode: e.target.value })} />
-              </Form.Group>
-            </Row>
-              <Form.Group as={Col} className="mb-3" id="formGridCheckbox">
-                <Form.Check type="checkbox" label="Create an account" />
-              </Form.Group>
-            <Button className="mt-3 mb-3" variant="dark" type="submit">
-              Confirm and proceed to payment
-            </Button>
-          </Form>
-        }
-        {proceed &&
-          <div>
-            <Button className="mt-3 mb-3" variant="outline-dark">
-              <AiOutlineCheckCircle/>
-              <p>Order confirmed</p>
-            </Button>
-            <Payment order={order}/>
-          </div>
-        }
-      </div>
+        </Col>
+      </Row> :
+      <h5>Your cart is empty</h5>
+      }
 
     </main>
   )

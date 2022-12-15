@@ -27,13 +27,13 @@ const FilterModal = (props) => {
     minItemPrice: 734,
   });
 
-  const newArray = [];
+
 
   function handleSubmit(event) {
 
     event.preventDefault();
-    console.log("filterdata at the beginning:", filterData);
-    console.log("products", props.products);
+    // console.log("filterdata at the beginning:", filterData);
+    // console.log("products", props.products);
     const filteredResult = props.products.filter((product) => {
       return (
         filterBy("brand", product) &&
@@ -48,7 +48,7 @@ const FilterModal = (props) => {
           : true)
       );
     });
-    console.log("result", filteredResult);
+    // console.log("result", filteredResult);
     props.setFilteredProducts(filteredResult);
 
     setFilterData({

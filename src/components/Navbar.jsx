@@ -7,6 +7,7 @@ import { FiUserCheck } from "react-icons/fi";
 import { useContext } from "react";
 import { AuthContext } from "../context/auth.context";
 import Dropdown from 'react-bootstrap/Dropdown';
+import { Link } from "react-router-dom";
 
 import logo from '../assets/vellox.png'
 
@@ -14,7 +15,7 @@ const Navbar = ({cartItems, favs}) => {
   const { isLoggedIn, logOutUser } = useContext(AuthContext);
 
   return (
-    <nav>
+    <nav fixed="top">
       <div className="nav-left">
         <NavLink to="/"><img id="nav-logo" src={logo} alt="logo"/></NavLink>
         <div className="navlinks">
@@ -27,7 +28,7 @@ const Navbar = ({cartItems, favs}) => {
       <NavLink to="/favs">
         <BsFillHeartFill/>
         {favs.length > 0 &&
-          <div className="amount-indicator">
+          <div className="amount-indicator favs-indicator">
             <p>{favs.length}</p>
           </div>
           }
@@ -35,7 +36,7 @@ const Navbar = ({cartItems, favs}) => {
         <NavLink to="/cart" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'} >
           <BsBag id="cart-icon" />
           {cartItems.length > 0 &&
-          <div className="amount-indicator">
+          <div className="amount-indicator cart-indicator">
             <p>{cartItems.length}</p>
           </div>
           }
@@ -46,8 +47,10 @@ const Navbar = ({cartItems, favs}) => {
           <Dropdown.Toggle variant="dark" id="dropdown-basic"><FiUserCheck style={{width: 20}}/></Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item href="/myOrders">My orders</Dropdown.Item>
-            <Dropdown.Item href="/" onClick={logOutUser}>Logout</Dropdown.Item>
+            <Dropdown.Item>
+              <Link to="/myOrders">My Orders</Link>
+            </Dropdown.Item>
+            <Dropdown.Item href="/" onClick={logOutUser}><Link to="/">My Orders</Link></Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown> :
         <NavLink to="/login" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'}><BiUserX style={{width: 20}}/></NavLink>

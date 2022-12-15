@@ -88,7 +88,7 @@ const ProductDetails = (props) => {
               </div>
             </div>
             <div className="actions-container">
-              <Button className="btn-main" id="fav-btn" variant="dark" onClick={()=>{props.handleFavs(product)}}><BsFillHeartFill className={props.isFav(product) ? "fav-color" : ""}/></Button>
+              <Button className="btn-main fav-btn" id="" variant="dark" onClick={()=>{props.handleFavs(product)}}><BsFillHeartFill className={props.isFav(product) ? "fav-color" : ""}/></Button>
               <Button className="btn-main" id="action-btn" variant="dark" onClick={() => {props.addCartItem(product, sizeChoice, colorChoice)}}>Add to cart<BsBag style={{marginLeft: "6", marginBottom: "5"}} /></Button>
 
             </div>
