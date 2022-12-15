@@ -10,7 +10,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 import logo from '../assets/vellox.png'
 
-const Navbar = (cartItems) => {
+const Navbar = ({cartItems, favs}) => {
   const { isLoggedIn, logOutUser } = useContext(AuthContext);
 
   return (
@@ -24,12 +24,21 @@ const Navbar = (cartItems) => {
         </div>
       </div>
       <div className="navicons">
-      <NavLink to="/favs"><BsFillHeartFill/></NavLink>
+      <NavLink to="/favs">
+        <BsFillHeartFill/>
+        {favs.length > 0 &&
+          <div className="amount-indicator">
+            <p>{favs.length}</p>
+          </div>
+          }
+      </NavLink>
         <NavLink to="/cart" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'} >
           <BsBag id="cart-icon" />
+          {cartItems.length > 0 &&
           <div className="amount-indicator">
-            {cartItems.length && <p>4</p>}
+            <p>{cartItems.length}</p>
           </div>
+          }
         </NavLink>
 
         {isLoggedIn ?

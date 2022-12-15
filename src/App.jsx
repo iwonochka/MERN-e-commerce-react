@@ -8,7 +8,7 @@ import Signup from "./pages/signup/Signup";
 import Cart from "./pages/cart/Cart";
 import ProductDetails from "./pages/product-details/ProductDetails";
 import About from "./pages/about/About";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import Payment from "./pages/payment/Payment";
 import { AuthContext } from "../src/context/auth.context";
 import Favs from "./pages/favs/Favs";
@@ -21,6 +21,11 @@ function App() {
   const [favs, setFavs] = useState([]);
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log("user", user)
+    user && getFavs()
+  }, [user]);
 
   function addCartItem(product, sizeChoice, colorChoice) {
     const newItem = {
@@ -40,6 +45,12 @@ function App() {
       return acc + item.product.price;
     }, 0);
     setTotal(sum);
+  }
+
+
+  function isFav(product) {
+    const result = [...favs]?.filter((fav) => {return fav._id === product._id})
+    return result.length > 0
   }
 
   function handleFavs(product) {
@@ -88,9 +99,11 @@ function App() {
   };
 
 
+
+
   return (
     <div className="App">
-      <Navbar cartItems={cartItems} />
+      <Navbar cartItems={cartItems} favs={favs} />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<About />} />
@@ -122,6 +135,8 @@ function App() {
               setTotal={setTotal}
               handleFavs={handleFavs}
               addCartItem={addCartItem}
+              isFav={isFav}
+              favs={favs}
             />
           }
         />

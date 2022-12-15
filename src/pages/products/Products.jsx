@@ -43,7 +43,7 @@ const Products = (props) => {
 
   return (
     <div className="Products">
-      <section className="products-header">
+      <section className="secondary-header">
         <h3>{query ? `Results for: ${query}` : "All bikes"}</h3>
       </section>
       <section className="search-section">
@@ -106,7 +106,7 @@ const Products = (props) => {
                       onClick={() => {
                         props.handleFavs(product);
                       }}
-                      // style={{ color: isClicked ? "red" : "white" }}
+                      className="card-icon"
                     />
                   </div>
                 )}

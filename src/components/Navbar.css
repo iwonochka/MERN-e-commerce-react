@@ -58,9 +58,10 @@ nav {
   right: 7.4rem;
   border-radius: 50%;
   background: red;
-  font-size: 0.4rem;
+  font-size: 0.5rem;
   color: white;
   height: 0.8rem;
   width: 0.8rem;
-  justify-content: center;
+  text-justify: center;
+  z-index: 1;
 }
