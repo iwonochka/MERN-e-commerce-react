@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -26,7 +26,7 @@ const ProductDetails = (props) => {
   const [sizeChoice, setSizeChoice] = useState("")
 
   const target = useRef(null);
-  const navigate = useNavigate();
+
 
   const getProduct = () => {
 
@@ -41,23 +41,7 @@ const ProductDetails = (props) => {
     getProduct();
   }, [] );
 
-  function updateTotal(updatedCartItems) {
-    return updatedCartItems.reduce((acc, item) => {
-      // console.log("acc", acc, "item.product.price", item.product.price)
-      return acc + item.product.price}, 0)
-  }
 
-  function addCartItem() {
-    const newItem = {
-      product: product,
-      sizeChoice: sizeChoice,
-      colorChoice: colorChoice
-    }
-    const updatedCartItems = [...props.cartItems, newItem]
-    props.setCartItems(updatedCartItems)
-    console.log(props.cartItems)
-    props.setTotal(updateTotal(updatedCartItems))
-  }
 
   return (
   <div>
@@ -104,8 +88,9 @@ const ProductDetails = (props) => {
               </div>
             </div>
             <div className="actions-container">
-              <Button className="btn-main" id="fav-btn" variant="dark"><BsFillHeartFill/></Button>
-              <Button className="btn-main" id="action-btn" variant="dark" onClick={addCartItem}>Add to cart<BsBag style={{marginLeft: "6", marginBottom: "5"}} /></Button>
+              <Button className="btn-main fav-btn" id="" variant="dark" onClick={()=>{props.handleFavs(product)}}><BsFillHeartFill className={props.isFav(product) ? "fav-color" : ""}/></Button>
+              <Button className="btn-main" id="action-btn" variant="dark" onClick={() => {props.addCartItem(product, sizeChoice, colorChoice)}}>Add to cart<BsBag style={{marginLeft: "6", marginBottom: "5"}} /></Button>
+
             </div>
           </div>
         </Col>

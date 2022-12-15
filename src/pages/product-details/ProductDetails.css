@@ -70,10 +70,13 @@
   bottom: 3vh;
 }
 
-#fav-btn {
+.fav-btn {
   width: fit-content;
 }
 
+.fav-color {
+  color: red;
+}
 .color-choice {
   border-radius: 50%;
   width: 20px;
