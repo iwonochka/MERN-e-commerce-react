@@ -14,6 +14,8 @@ import { AuthContext } from "../src/context/auth.context";
 import Favs from "./pages/favs/Favs";
 import MyOrders from "./pages/my-orders/MyOrders";
 import axios from "axios";
+const REACT_APP_API_URL = "http://localhost:5005";
+const REACT_APP_API_URL2 = "https://vellox.cyclic.app";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -24,11 +26,11 @@ function App() {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const navigate = useNavigate();
 
-  console.log("items", cartItems)
+  console.log("items", cartItems);
 
   const getAllProducts = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/products`)
+      .get(`${REACT_APP_API_URL2}/api/products`)
       .then((response) => {
         setProducts(response.data);
         setFilteredProducts(response.data);
@@ -67,7 +69,7 @@ function App() {
     const result = [...favs]?.filter((fav) => {
       return fav._id === product._id;
     });
-    console.log(result)
+    console.log(result);
     return result.length > 0;
   }
 
@@ -83,7 +85,7 @@ function App() {
   const addFav = (product) => {
     const requestBody = { product, user };
     axios
-      .post(`${process.env.REACT_APP_API_URL}/api/addFavs`, requestBody)
+      .post(`${REACT_APP_API_URL2}/api/addFavs`, requestBody)
       .then((res) => {
         getFavs();
       })
@@ -95,7 +97,7 @@ function App() {
   const deleteFav = (product) => {
     const requestBody = { product, user };
     axios
-      .post(`${process.env.REACT_APP_API_URL}/api/deleteFavs`, requestBody)
+      .post(`${REACT_APP_API_URL2}/api/deleteFavs`, requestBody)
       .then((res) => {
         getFavs();
       })
@@ -105,9 +107,9 @@ function App() {
     getFavs();
   };
   const getFavs = () => {
-    console.log("url", `${process.env.REACT_APP_API_URL}/api/favs/${user._id}`);
+    console.log("url", `${REACT_APP_API_URL2}/api/favs/${user._id}`);
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/favs/${user._id}`)
+      .get(`${REACT_APP_API_URL2}/api/favs/${user._id}`)
       .then((response) => {
         // console.log("response data favs", response.data.favs);
 
@@ -119,7 +121,7 @@ function App() {
   function setFilterFor(path) {
     switch (path) {
       case "/ebikes":
-        console.log("from swith -> ebikes")
+        console.log("from swith -> ebikes");
         setFilteredProducts(
           products.filter((product) => {
             return product.isEbike;
@@ -127,7 +129,7 @@ function App() {
         );
         break;
       case "/urban":
-        console.log("from swith -> urban")
+        console.log("from swith -> urban");
         setFilteredProducts(
           products.filter((product) => {
             return product.category === "urban";
@@ -135,7 +137,7 @@ function App() {
         );
         break;
       case "/hybrids":
-        console.log("from swith -> hybrids")
+        console.log("from swith -> hybrids");
         setFilteredProducts(
           products.filter((product) => {
             return product.subcategory === "hybrid";

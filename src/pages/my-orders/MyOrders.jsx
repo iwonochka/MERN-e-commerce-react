@@ -3,6 +3,8 @@ import { AuthContext } from "../../context/auth.context";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { AiTwotoneLayout } from "react-icons/ai";
+const REACT_APP_API_URL="http://localhost:5005"
+const REACT_APP_API_URL2="https://vellox.cyclic.app"
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
@@ -10,7 +12,7 @@ const MyOrders = () => {
 
   const getOrders = () => {
     axios
-      .get(`${process.env.REACT_APP_API_URL}/api/orders/${user._id}`)
+      .get(`${REACT_APP_API_URL2}/api/orders/${user._id}`)
       .then((response) => {
         console.log("response data", response.data);
 
