@@ -9,6 +9,8 @@ import "./Cart.css"
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {AiOutlineCheckCircle} from "react-icons/ai";
+const REACT_APP_API_URL="http://localhost:5005"
+const REACT_APP_API_URL2="https://vellox.cyclic.app"
 
 
 
@@ -57,7 +59,7 @@ const Cart = (props) => {
       }
       const requestBody = { newOrder };
       axios
-        .post(`${process.env.REACT_APP_API_URL}/api/createOrder`, requestBody)
+        .post(`${REACT_APP_API_URL2}/api/createOrder`, requestBody)
         .then((res) => {
           // console.log("createOrder res:", res)
           setProceed(true)
