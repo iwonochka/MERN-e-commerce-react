@@ -31,7 +31,10 @@ const Products = (props) => {
   return (
     <div className="Products">
       <section className="secondary-header">
-        <h3>{query ? `Results for: ${query}` : "All bikes"}</h3>
+        {window.location.path === "/ebikes" && <h3>E-bikes</h3>}
+        {window.location.path === "/bikes" && <h3>All bikes</h3>}
+        {window.location.path === "/hybrids" && <h3>Hybrids</h3>}
+        {window.location.path === "/urban" && <h3>Urban</h3>}
       </section>
       <section className="search-section">
         <Searchbar setQuery={setQuery} />
