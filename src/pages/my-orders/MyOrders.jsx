@@ -3,6 +3,7 @@ import { AuthContext } from "../../context/auth.context";
 import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { AiTwotoneLayout } from "react-icons/ai";
+import dayjs from 'dayjs';
 const REACT_APP_API_URL="http://localhost:5005"
 const REACT_APP_API_URL2="https://vellox.cyclic.app"
 
@@ -34,7 +35,9 @@ const MyOrders = () => {
             <div key={order._id} className="order-card">
               <div>
                 <p>Total amount: {order.amount} €</p>
-                <p>Ordered on: 14/12/2022 </p>
+                <p>Ordered on: {
+                    dayjs(`${order.createdAt}`).format('DD MMM YYYY')
+                  } </p>
                 <p><b>Status:</b> {order.isPaid ? "payment confirmed" : "payment not confirmed"} </p>
               </div>
               <div>

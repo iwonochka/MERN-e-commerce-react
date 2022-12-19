@@ -9,6 +9,7 @@ import "./Cart.css"
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import {AiOutlineCheckCircle} from "react-icons/ai";
+
 const REACT_APP_API_URL="http://localhost:5005"
 const REACT_APP_API_URL2="https://vellox.cyclic.app"
 
@@ -19,9 +20,12 @@ const Cart = (props) => {
   // console.log("cart items:", props.cartItems)
   const [order, setOrder] = useState({})
   const [proceed, setProceed] = useState(false)
+  const { storeToken, authenticateUser } = useContext(AuthContext);
   const [checkoutData, setCheckoutData] = useState({
     name: null,
     surname: null,
+    email: null,
+    password: null,
     phone: null,
     address: null,
     city: null,
@@ -48,12 +52,52 @@ const Cart = (props) => {
     props.updateTotal(newCartItems)
   }
 
-    function createOrder(event) {
+    function handleCheckout(event) {
       event.preventDefault();
+      if (!user) {
+        const email = checkoutData.email
+        const password = checkoutData.password
+        const requestBody= {email, password}
+        console.log(requestBody)
+
+        axios
+        .post(`${REACT_APP_API_URL}/auth/signup`, requestBody)
+        .then((res) => {
+          console.log("data:", res.data)
+          axios
+          .post(`${REACT_APP_API_URL}/auth/login`, requestBody)
+          .then((res) => {
+            storeToken(res.data.authToken);
+            authenticateUser()
+          })
+          .catch((error) => {
+            console.log(error)
+
+          });
+        })
+        .catch((error) => {
+          console.log(error)
+        });
+      }
+      createOrder()
+
+    }
+
+
+    
+
+    function createOrder() {
       const newOrder = {
         items: props.cartItems,
         user: user,
-        orderDetails: checkoutData,
+        orderDetails: {
+          name: checkoutData.name,
+          surname: checkoutData.surname,
+          phone: checkoutData.phone,
+          address: checkoutData.address,
+          city: checkoutData.city,
+          zipCode: checkoutData.zipCode
+        },
         isPaid: false,
         amount: props.total
       }
@@ -61,13 +105,14 @@ const Cart = (props) => {
       axios
         .post(`${REACT_APP_API_URL}/api/createOrder`, requestBody)
         .then((res) => {
-          // console.log("createOrder res:", res)
+          console.log("createOrder res:", res)
           setProceed(true)
         })
         .catch((error) => {
-          console.log(error.response.data.message)
+          console.log(error)
         });
     }
+
 
 
   return (
@@ -100,7 +145,7 @@ const Cart = (props) => {
         </Col>
         <Col sm={12} md={12} lg={6}>
           {(!proceed && props.cartItems.length > 0) &&
-            <Form onSubmit={createOrder} className="checkout-form">
+            <Form onSubmit={handleCheckout} className="checkout-form">
               <Row className="mb-3">
                 <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridEmail">
                   <Form.Label>Name</Form.Label>
@@ -120,14 +165,14 @@ const Cart = (props) => {
                 <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridEmail">
                   <Form.Label>Email</Form.Label>
                   <Form.Control type="email" placeholder="Enter email" onChange={(e) =>
-                        setCheckoutData({ ...checkoutData, name: e.target.value })
+                        setCheckoutData({ ...checkoutData, email: e.target.value })
                       } />
                 </Form.Group>
 
                 <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridPassword">
                   <Form.Label>Password</Form.Label>
                   <Form.Control type="password" placeholder="Enter password" onChange={(e) =>
-                        setCheckoutData({ ...checkoutData, surname: e.target.value })
+                        setCheckoutData({ ...checkoutData, password: e.target.value })
                       } />
                 </Form.Group>
               </Row>
@@ -161,9 +206,6 @@ const Cart = (props) => {
                   setCheckoutData({ ...checkoutData, zipCode: e.target.value })} />
                 </Form.Group>
               </Row>
-                <Form.Group as={Col} className="mb-3" id="formGridCheckbox">
-                  <Form.Check type="checkbox" label="Create an account" />
-                </Form.Group>
               <Button className="mt-3 mb-3" variant="dark" type="submit">
                 Confirm and proceed to payment
               </Button>
