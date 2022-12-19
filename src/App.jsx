@@ -26,11 +26,9 @@ function App() {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const navigate = useNavigate();
 
-  console.log("items", cartItems);
-
   const getAllProducts = () => {
     axios
-      .get(`${REACT_APP_API_URL2}/api/products`)
+      .get(`${REACT_APP_API_URL}/api/products`)
       .then((response) => {
         setProducts(response.data);
         setFilteredProducts(response.data);
@@ -69,7 +67,6 @@ function App() {
     const result = [...favs]?.filter((fav) => {
       return fav._id === product._id;
     });
-    console.log(result);
     return result.length > 0;
   }
 
@@ -85,7 +82,7 @@ function App() {
   const addFav = (product) => {
     const requestBody = { product, user };
     axios
-      .post(`${REACT_APP_API_URL2}/api/addFavs`, requestBody)
+      .post(`${REACT_APP_API_URL}/api/addFavs`, requestBody)
       .then((res) => {
         getFavs();
       })
@@ -97,7 +94,7 @@ function App() {
   const deleteFav = (product) => {
     const requestBody = { product, user };
     axios
-      .post(`${REACT_APP_API_URL2}/api/deleteFavs`, requestBody)
+      .post(`${REACT_APP_API_URL}/api/deleteFavs`, requestBody)
       .then((res) => {
         getFavs();
       })
@@ -107,9 +104,9 @@ function App() {
     getFavs();
   };
   const getFavs = () => {
-    console.log("url", `${REACT_APP_API_URL2}/api/favs/${user._id}`);
+    // console.log("url", `${REACT_APP_API_URL}/api/favs/${user._id}`);
     axios
-      .get(`${REACT_APP_API_URL2}/api/favs/${user._id}`)
+      .get(`${REACT_APP_API_URL}/api/favs/${user._id}`)
       .then((response) => {
         // console.log("response data favs", response.data.favs);
 
@@ -212,6 +209,7 @@ function App() {
               getAllProducts={getAllProducts}
               filteredProducts={filteredProducts}
               setFilteredProducts={setFilteredProducts}
+              setProducts={setProducts}
             />
           }
         />

@@ -28,7 +28,7 @@ const ProductDetails = (props) => {
 
   const getProduct = () => {
     axios
-      .get(`${REACT_APP_API_URL2}/api/products/${productId}`)
+      .get(`${REACT_APP_API_URL}/api/products/${productId}`)
       .then((response) => {
         const oneProduct = response.data;
         setProduct(oneProduct);

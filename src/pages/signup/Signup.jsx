@@ -17,7 +17,7 @@ const Signup = () => {
     e.preventDefault();
     const requestBody = { email, password, name };
     axios
-      .post(`${REACT_APP_API_URL2}/auth/signup`, requestBody)
+      .post(`${REACT_APP_API_URL}/auth/signup`, requestBody)
       .then((res) => {
         setEmail("");
         setPassword("");

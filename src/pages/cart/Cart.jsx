@@ -59,7 +59,7 @@ const Cart = (props) => {
       }
       const requestBody = { newOrder };
       axios
-        .post(`${REACT_APP_API_URL2}/api/createOrder`, requestBody)
+        .post(`${REACT_APP_API_URL}/api/createOrder`, requestBody)
         .then((res) => {
           // console.log("createOrder res:", res)
           setProceed(true)
@@ -112,6 +112,21 @@ const Cart = (props) => {
                 <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridPassword">
                   <Form.Label>Surname</Form.Label>
                   <Form.Control type="text" placeholder="Surname" onChange={(e) =>
+                        setCheckoutData({ ...checkoutData, surname: e.target.value })
+                      } />
+                </Form.Group>
+              </Row>
+              <Row className="mb-3">
+                <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridEmail">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control type="email" placeholder="Enter email" onChange={(e) =>
+                        setCheckoutData({ ...checkoutData, name: e.target.value })
+                      } />
+                </Form.Group>
+
+                <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridPassword">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control type="password" placeholder="Enter password" onChange={(e) =>
                         setCheckoutData({ ...checkoutData, surname: e.target.value })
                       } />
                 </Form.Group>

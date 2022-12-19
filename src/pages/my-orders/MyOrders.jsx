@@ -12,7 +12,7 @@ const MyOrders = () => {
 
   const getOrders = () => {
     axios
-      .get(`${REACT_APP_API_URL2}/api/orders/${user._id}`)
+      .get(`${REACT_APP_API_URL}/api/orders/${user._id}`)
       .then((response) => {
         console.log("response data", response.data);
 
@@ -28,17 +28,28 @@ const MyOrders = () => {
   return (
     <div>
       <h1>My Orders</h1>
-      <div>
+      <div className="orders-container">
         {orders &&
           orders.map((order) => (
-            <div key={order._id}>
-              <p>{order.amount}</p>
+            <div key={order._id} className="order-card">
               <div>
-                {order.items.map((item) => (
-                  <div key={item._id}>
-                    <p>{item.product.model}</p>
-                  </div>
-                ))}
+                <p>Total amount: {order.amount} €</p>
+                <p>Ordered on: 14/12/2022 </p>
+                <p><b>Status:</b> {order.isPaid ? "payment confirmed" : "payment not confirmed"} </p>
+              </div>
+              <div>
+                <h5>Products:</h5>
+                <div className="order-product">
+                  {order.items.map((item) => (
+                    <div >
+                      <img className="order-product-img" src={item.product.images[0]} alt="order product" />
+                      <div key={item._id}>
+                        <p>{item.product.model}</p>
+                        <p>{item.product.price} €</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           ))}

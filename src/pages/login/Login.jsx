@@ -22,7 +22,7 @@ const Login = () => {
 
     const requestBody = { email, password };
     axios
-      .post(`${REACT_APP_API_URL2}/auth/login`, requestBody)
+      .post(`${REACT_APP_API_URL}/auth/login`, requestBody)
       .then((res) => {
         setEmail("");
         setPassword("");
