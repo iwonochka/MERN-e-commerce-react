@@ -8,8 +8,6 @@ import SortDropdown from "../../components/sortDropdown/SortDropdown";
 import Button from "react-bootstrap/Button";
 import FilterModal from "../../components/filterModal/FilterModal";
 import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import "../product-details/ProductDetails.css";
 // import { useNavigate } from 'react-router-dom';
 // import { AuthContext } from '../../context/auth.context';
@@ -36,7 +34,7 @@ const Products = (props) => {
         {window.location.pathname === "/hybrids" && <h3>Hybrids</h3>}
         {window.location.pathname === "/urban" && <h3>Urban</h3>}
       </section>
-      <section className="search-section">
+      <Container className="search-section">
         <Searchbar setQuery={setQuery} />
         <Button variant="outline-dark" onClick={() => setModalShow(true)}>
           Filter
@@ -56,16 +54,12 @@ const Products = (props) => {
           setFilteredProducts={props.setFilteredProducts}
           filteredProducts= {props.filteredProducts}
         />
-      </section>
+      </Container>
 
-      <Container>
-        <Row>
+      <Container className="grid-wrapper">
           {searchedProducts?.map((product) => {
             return (
-              <Col
-                sm={12}
-                md={4}
-                lg={4}
+              <div
                 className="product-card"
                 key={product._id}
                 onMouseEnter={() => {
@@ -108,10 +102,10 @@ const Products = (props) => {
                     </Button>
                   </div>
                 )}
-              </Col>
+              </div>
             );
           })}
-        </Row>
+
       </Container>
     </div>
   );
