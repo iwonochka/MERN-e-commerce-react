@@ -14,6 +14,7 @@ import { AuthContext } from "../src/context/auth.context";
 import Favs from "./pages/favs/Favs";
 import MyOrders from "./pages/my-orders/MyOrders";
 import axios from "axios";
+import Footer from "./components/footer/Footer";
 const REACT_APP_API_URL = "http://localhost:5005";
 const REACT_APP_API_URL2 = "https://vellox.cyclic.app";
 
@@ -249,6 +250,7 @@ function App() {
         />
         <Route path="/myOrders" element={<MyOrders total={total} />} />
       </Routes>
+      <Footer/>
     </div>
   );
 }

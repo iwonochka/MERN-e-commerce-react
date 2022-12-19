@@ -6,7 +6,7 @@ import "./HomePage.css";
 
 const HomePage = (props) => {
   return (
-    <main>
+    <>
       <section className="homepage-preview row">
         <div className="homepage-preview-section col-sm-12 col-md-4 col-lg-4 ">
           <img className="preview-img img-fluid" src={ebike} alt="ebike" />
@@ -45,7 +45,7 @@ const HomePage = (props) => {
           </Link>
         </div>
       </section>
-    </main>
+    </>
   );
 };
 
