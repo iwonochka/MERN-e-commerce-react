@@ -4,25 +4,21 @@
   width: 100%;
   background: black;
   color: white;
-  padding: 1rem;
-  /* position: fixed; */
-  /* left:0;
-  bottom:0;
-  right:0;
-  height: fit-content;
-  margin-top: 4rem; */
   position: absolute;
   bottom: 0;
-  height: 30vh;
+  height: 40vh;
 }
 
 .vertical-line {
   border-left: 1px solid white;
   border-right: 1px solid white;
 }
-.footer-first-section {
-  padding-right: 2rem;
+
+#footer-first-section p {
+  padding-right: 1rem;
+  padding-left: 1rem;
 }
+
 .footer section {
   flex: 1;
   padding: 1rem;
@@ -76,10 +72,7 @@
 }
 
 @media (min-width: 1381px) {
-  .footer{
-    position: absolute;
-    top: 93vh;
-  }
+
 }
 
 @media (min-width: 1025px) and (max-width: 1280px) {

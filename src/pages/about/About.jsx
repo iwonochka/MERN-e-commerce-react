@@ -13,7 +13,7 @@ const About = () => {
   return (
     <div className="main-container">
       <div className="about-header"><h1>About the project</h1></div>
-      <Row>
+      <Row className="mb-1">
         <Col sm={12} md={4} lg={4} className="about-card" style={{backgroundColor: "black", color: "white"}}>
           <h5>Final project of Ironhack full-stack coding bootcamp in Berlin <br/> built in Dec 2022</h5>
         </Col>

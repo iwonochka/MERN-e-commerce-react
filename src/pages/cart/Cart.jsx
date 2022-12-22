@@ -122,7 +122,7 @@ const Cart = (props) => {
       </section>
       {props.cartItems.length > 0 ?
       <Row className="p-4">
-        <Col sm={12} md={12} lg={6}>
+        <Col sm={12} md={12} lg={12} xl={6}>
           <div className="cart-container">
             <div className="cart-cards-container">
               {props.cartItems && props.cartItems.map((cartItem) => (
@@ -144,9 +144,12 @@ const Cart = (props) => {
               ))}
               </div>
             </div>
-            <p>TOTAL : <b>{props.total} €</b> </p>
+            <div className="cart-total">
+              <h4>TOTAL</h4>
+              <h4>{props.total} €</h4>
+            </div>
         </Col>
-        <Col sm={12} md={12} lg={6}>
+        <Col sm={12} md={12} lg={12} xl={6}>
           {(!proceed && props.cartItems.length > 0) &&
             <Form onSubmit={handleCheckout} className="checkout-form">
               <Row className="mb-3">
