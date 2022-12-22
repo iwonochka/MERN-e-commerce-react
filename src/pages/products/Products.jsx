@@ -27,7 +27,7 @@ const Products = (props) => {
 
 
   return (
-    <div className="Products">
+    <div className="products-container">
       <section className="secondary-header">
         {window.location.pathname === "/ebikes" && <h3>E-bikes</h3>}
         {window.location.pathname === "/bikes" && <h3>All bikes</h3>}

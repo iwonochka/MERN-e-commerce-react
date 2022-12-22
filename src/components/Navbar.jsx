@@ -25,7 +25,7 @@ const Navbar = ({cartItems, favs}) => {
         </div>
       </div>
       <div className="navicons">
-      <NavLink to="/favs">
+      <NavLink to="/favs" className={({ isActive }) => isActive ? 'activeNavLink indicator-container' : 'navLink indicator-container'}>
         <BsFillHeartFill/>
         {favs.length > 0 &&
           <div className="amount-indicator favs-indicator">
@@ -33,7 +33,7 @@ const Navbar = ({cartItems, favs}) => {
           </div>
           }
       </NavLink>
-        <NavLink to="/cart" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'} >
+        <NavLink to="/cart" className={({ isActive }) => isActive ? 'activeNavLink indicator-container' : 'navLink indicator-container'} >
           <BsBag id="cart-icon" />
           {cartItems.length > 0 &&
           <div className="amount-indicator cart-indicator">

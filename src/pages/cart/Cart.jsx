@@ -84,7 +84,7 @@ const Cart = (props) => {
     }
 
 
-    
+
 
     function createOrder() {
       const newOrder = {
@@ -116,9 +116,12 @@ const Cart = (props) => {
 
 
   return (
-    <main className="cart-wrap-relative">
+    <main className="cart-wrap-relative main-container">
+      <section className="secondary-header">
+        <h3>Your cart</h3>
+      </section>
       {props.cartItems.length > 0 ?
-      <Row>
+      <Row className="p-4">
         <Col sm={12} md={12} lg={6}>
           <div className="cart-container">
             <div className="cart-cards-container">
@@ -147,14 +150,14 @@ const Cart = (props) => {
           {(!proceed && props.cartItems.length > 0) &&
             <Form onSubmit={handleCheckout} className="checkout-form">
               <Row className="mb-3">
-                <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridEmail">
+                <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridName">
                   <Form.Label>Name</Form.Label>
                   <Form.Control type="text" placeholder="Enter name" onChange={(e) =>
                         setCheckoutData({ ...checkoutData, name: e.target.value })
                       } />
                 </Form.Group>
 
-                <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridPassword">
+                <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridSurname">
                   <Form.Label>Surname</Form.Label>
                   <Form.Control type="text" placeholder="Surname" onChange={(e) =>
                         setCheckoutData({ ...checkoutData, surname: e.target.value })
@@ -178,7 +181,7 @@ const Cart = (props) => {
               </Row>
               <Row className="mb-3">
 
-              <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridPassword">
+              <Form.Group as={Col} sm={12} md={6} lg={6} controlId="formGridPhone">
                   <Form.Label>Phone nr</Form.Label>
                   <Form.Control type="number" placeholder="Phone nr" onChange={(e) =>
                         setCheckoutData({ ...checkoutData, phone: e.target.value })
@@ -227,7 +230,7 @@ const Cart = (props) => {
 
         </Col>
       </Row> :
-      <h5>Your cart is empty</h5>
+      <p className="mt-4">Your cart is empty</p>
       }
 
     </main>

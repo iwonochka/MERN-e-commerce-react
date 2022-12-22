@@ -29,7 +29,7 @@ const MyOrders = () => {
   }, [user]);
 
   return (
-    <div>
+    <div className="main-container">
       <section className="secondary-header">
         <h3>My Orders</h3>
       </section>

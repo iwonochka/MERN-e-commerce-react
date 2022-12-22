@@ -7,7 +7,7 @@ import {BsGithub, BsLinkedin} from "react-icons/bs";
 const Footer = () => {
   return (
 
-    <footer class="footer">
+    <footer className="footer">
       <section id="footer-first-section">
         <img src={Logo} style={{width: "60px", height: "60px", marginBottom: "1rem"}}  alt="logo" />
         <p>© Iwona Behnke 2022</p>

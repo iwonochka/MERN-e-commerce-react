@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import {AiFillDelete} from "react-icons/ai"
 import Container from "react-bootstrap/Container";
 
+
 const Favs = ({favs, deleteFav, getFavs}) => {
   const {user} = useContext(AuthContext)
   const [hoveredOn, setHoveredOn] = useState("")
@@ -13,11 +14,12 @@ const Favs = ({favs, deleteFav, getFavs}) => {
 
 
   return (
-    <div>
+    <div className="main-container">
     <section className="secondary-header">
       <h3>Favourites</h3>
     </section>
       <Container className="grid-wrapper">
+        {!favs.length && <p>Add some products to your favorites!</p>}
         {favs?.map((fav) => {
           return (
             <div

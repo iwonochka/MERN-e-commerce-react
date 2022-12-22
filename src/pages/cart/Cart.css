@@ -1,7 +1,6 @@
 .cart-wrap-relative {
   align-items: center;
   justify-content: center;
-  margin: 2rem;
 }
 .cart-container {
   width: 100%;
@@ -107,5 +106,7 @@
     align-items: center;
     justify-content: space-between;
   }
-
+  .payment-btn{
+    width: auto;
+  }
 }

@@ -1,5 +1,7 @@
 .product-details-container {
-  margin: 10vh 10vw 10vh 10vw;
+  width: 80%;
+  margin: auto;
+  min-height: 80vh;
 }
 
 .carousel-details {
@@ -102,7 +104,8 @@
     left: 67%;
   }
   .product-details-container {
-    margin: 10vw;
+    margin-top: 10vh;
+    margin-bottom: 20vh;
   }
 }
 
