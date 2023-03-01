@@ -14,10 +14,6 @@ function AuthProviderWrapper(props) {
     localStorage.setItem('authToken', token);
   }
 
-  useEffect(() => {
-    console.log("New user!", user)
-  }, [user])
-
   const authenticateUser = () => {
     // Get the stored token from the localStorage
     const storedToken = localStorage.getItem('authToken');
@@ -32,8 +28,6 @@ function AuthProviderWrapper(props) {
       .then((response) => {
         // If the server verifies that JWT token is valid
         const userData = response.data;
-        console.log("From auth.context, user response data:", response.data)
-        console.log("From auth.context, user:", userData)
        // Update state variables
         setIsLoggedIn(true);
         setIsLoading(false);
@@ -53,8 +47,6 @@ function AuthProviderWrapper(props) {
         setUser(null);
     }
   }
- user && console.log("user:", user)
-
 
   const removeToken = () => {
     // Upon logout, remove the token from the localStorage

@@ -52,8 +52,6 @@ const Cart = (props) => {
         const email = checkoutData.email;
         const password = checkoutData.password;
         const requestBody = { email, password };
-        console.log(requestBody);
-        console.log("no user:", !user);
 
         let signupRes = await axios.post(
           `${REACT_APP_API_URL}/auth/signup`,
@@ -63,8 +61,6 @@ const Cart = (props) => {
           `${REACT_APP_API_URL}/auth/login`,
           requestBody
         );
-        console.log("createuser, res:", signupRes.data);
-        console.log("createuser, res:", res.data);
         setCheckoutUser(res.data);
         storeToken(res.data.authToken);
         authenticateUser();
@@ -84,7 +80,6 @@ const Cart = (props) => {
     }
   }
   function createOrder() {
-    console.log("Hello from create order", checkoutUser);
     const newOrder = {
       items: props.cartItems,
       user: checkoutUser,
@@ -100,11 +95,10 @@ const Cart = (props) => {
       amount: props.total,
     };
     const requestBody = { newOrder };
-    console.log("request body:", requestBody);
     axios
       .post(`${REACT_APP_API_URL}/api/createOrder`, requestBody)
       .then((res) => {
-        console.log("createOrder res:", res);
+        setOrder(newOrder)
         setProceed(true);
       })
       .catch((error) => {
