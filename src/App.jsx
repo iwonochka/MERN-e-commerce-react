@@ -114,7 +114,6 @@ function App() {
   function setFilterFor(path) {
     switch (path) {
       case "/ebikes":
-        console.log("from swith -> ebikes");
         setFilteredProducts(
           products.filter((product) => {
             return product.isEbike;
@@ -122,7 +121,6 @@ function App() {
         );
         break;
       case "/urban":
-        console.log("from swith -> urban");
         setFilteredProducts(
           products.filter((product) => {
             return product.category === "urban";
@@ -130,7 +128,6 @@ function App() {
         );
         break;
       case "/hybrids":
-        console.log("from swith -> hybrids");
         setFilteredProducts(
           products.filter((product) => {
             return product.subcategory === "hybrid";
