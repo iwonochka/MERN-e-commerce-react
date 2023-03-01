@@ -13,8 +13,8 @@ import Tooltip from "react-bootstrap/Tooltip";
 import { BsFillHeartFill } from "react-icons/bs";
 import { BsBag } from "react-icons/bs";
 import { BsCheck } from "react-icons/bs";
-const REACT_APP_API_URL="http://localhost:5005"
-const REACT_APP_API_URL2="https://vellox.cyclic.app"
+// const REACT_APP_API_URL="http://localhost:5005"
+const REACT_APP_API_URL="https://vellox.cyclic.app"
 
 const ProductDetails = (props) => {
   const [product, setProduct] = useState(null);

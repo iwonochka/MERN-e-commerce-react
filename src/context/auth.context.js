@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const REACT_APP_API_URL="http://localhost:5005"
-const REACT_APP_API_URL2="https://vellox.cyclic.app"
+// const REACT_APP_API_URL="http://localhost:5005"
+const REACT_APP_API_URL="https://vellox.cyclic.app"
 
 const AuthContext = React.createContext();
 
@@ -13,6 +13,10 @@ function AuthProviderWrapper(props) {
   const storeToken = (token) => {
     localStorage.setItem('authToken', token);
   }
+
+  useEffect(() => {
+    console.log("New user!", user)
+  }, [user])
 
   const authenticateUser = () => {
     // Get the stored token from the localStorage
@@ -27,11 +31,13 @@ function AuthProviderWrapper(props) {
       )
       .then((response) => {
         // If the server verifies that JWT token is valid
-        const user = response.data;
+        const userData = response.data;
+        console.log("From auth.context, user response data:", response.data)
+        console.log("From auth.context, user:", userData)
        // Update state variables
         setIsLoggedIn(true);
         setIsLoading(false);
-        setUser(user);
+        setUser(userData);
       })
       .catch((error) => {
         // If the server sends an error response (invalid token)
@@ -47,6 +53,8 @@ function AuthProviderWrapper(props) {
         setUser(null);
     }
   }
+ user && console.log("user:", user)
+
 
   const removeToken = () => {
     // Upon logout, remove the token from the localStorage

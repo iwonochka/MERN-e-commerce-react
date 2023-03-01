@@ -4,10 +4,8 @@ import { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import { BsCheckCircleFill, BsFillXCircleFill } from "react-icons/bs";
 import dayjs from 'dayjs';
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-const REACT_APP_API_URL="http://localhost:5005"
-const REACT_APP_API_URL2="https://vellox.cyclic.app"
+// const REACT_APP_API_URL="http://localhost:5005"
+const REACT_APP_API_URL="https://vellox.cyclic.app"
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);

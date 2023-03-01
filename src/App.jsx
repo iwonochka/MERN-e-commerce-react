@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import HomePage from "./pages/homepage/HomePage";
 import Products from "./pages/products/Products";
 import Navbar from "./components/Navbar";
@@ -15,8 +15,8 @@ import Favs from "./pages/favs/Favs";
 import MyOrders from "./pages/my-orders/MyOrders";
 import axios from "axios";
 import Footer from "./components/footer/Footer";
-const REACT_APP_API_URL = "http://localhost:5005";
-const REACT_APP_API_URL2 = "https://vellox.cyclic.app";
+// const REACT_APP_API_URL = "http://localhost:5005";
+const REACT_APP_API_URL = "https://vellox.cyclic.app";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -58,7 +58,6 @@ function App() {
 
   function updateTotal(items) {
     const sum = items.reduce((acc, item) => {
-      // console.log("acc", acc, "item.product.price", item.product.price)
       return acc + item.product.price;
     }, 0);
     setTotal(sum);
@@ -73,7 +72,6 @@ function App() {
 
   function handleFavs(product) {
     if (user) {
-      // console.log(favs);
       isFav(product) ? deleteFav(product) : addFav(product);
     } else {
       navigate("/login");
@@ -105,12 +103,9 @@ function App() {
     getFavs();
   };
   const getFavs = () => {
-    // console.log("url", `${REACT_APP_API_URL}/api/favs/${user._id}`);
     axios
       .get(`${REACT_APP_API_URL}/api/favs/${user._id}`)
       .then((response) => {
-        // console.log("response data favs", response.data.favs);
-
         setFavs(response.data.favs);
       })
       .catch((error) => console.log(error));
@@ -146,10 +141,6 @@ function App() {
         console.log("setFilterFor went to default!");
     }
   }
-
-  // useEffect(() => {
-  //   setFilterFor(window.location.pathname);
-  // }, [window.location.pathname]);
 
   return (
     <div className="App">
