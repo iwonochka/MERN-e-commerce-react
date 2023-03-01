@@ -1,0 +1,16 @@
+.signup-container {
+  width: 60vh;
+  margin: auto;
+
+}
+.signup-btn {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 700px) {
+  .signup-container{
+    width: 80%;
+  }
+}

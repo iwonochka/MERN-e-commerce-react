@@ -29,9 +29,9 @@ nav {
   align-items: center;
 }
 
-.navicons {
+/* .navicons {
   position: relative;
-}
+} */
 
 
 @media (max-width: 768px) {
@@ -52,6 +52,10 @@ nav {
 	margin: 0 -.25rem;
   transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
 }
+
+.indicator-container {
+  position: relative;
+}
 .navlinks > a:hover {
   color: #fff;
   box-shadow: inset 200px 0 0 0 black;;
@@ -71,9 +75,13 @@ nav {
 }
 
 .cart-indicator {
-  right: 5.3rem;
+  /* right: 5.3rem; */
+  left: 0.6rem;
+  top: 0.1rem;
 }
 
 .favs-indicator {
-  right: 8.2rem;
+  /* right: 8.2rem; */
+  left: 0.6rem;
+  top: 0.1rem;
 }

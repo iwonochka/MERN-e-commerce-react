@@ -1,7 +1,6 @@
 .cart-wrap-relative {
   align-items: center;
   justify-content: center;
-  margin: 2rem;
 }
 .cart-container {
   width: 100%;
@@ -61,6 +60,13 @@
   margin: 0;
   flex: 1;
 }
+
+.cart-total {
+  display: flex;
+  gap: 2rem;
+  justify-content: end;
+  padding-right: 2rem;
+}
 .cart-delete-btn {
   width: 4rem;
   align-self: center;
@@ -94,7 +100,7 @@
   margin-bottom: 0.2rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 700px) {
   .horizontal-card {
     flex-direction: column;
     align-items: stretch;
@@ -107,5 +113,7 @@
     align-items: center;
     justify-content: space-between;
   }
-
+  .payment-btn{
+    width: auto;
+  }
 }

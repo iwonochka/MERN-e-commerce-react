@@ -8,16 +8,17 @@ import {FaNode} from "react-icons/fa"
 import {SiMongodb} from "react-icons/si"
 import {BsBootstrapFill} from "react-icons/bs"
 
+
 const About = () => {
   return (
-    <div className="about-container">
+    <div className="main-container">
       <div className="about-header"><h1>About the project</h1></div>
-      <Row>
+      <Row className="mb-1">
         <Col sm={12} md={4} lg={4} className="about-card" style={{backgroundColor: "black", color: "white"}}>
-          <h4>Final project of Ironhack full-stack coding bootcamp in Berlin <br/> built in Dec 2022</h4>
+          <h5>Final project of Ironhack full-stack coding bootcamp in Berlin <br/> built in Dec 2022</h5>
         </Col>
         <Col sm={12} md={4} lg={4} className="about-card" style={{backgroundColor: "white", color: "black"}} >
-          <h4>Tech stack:</h4>
+          <h5>Tech stack:</h5>
           <div className="about-icons-container">
             <div>
               <IoLogoJavascript className="about-icon"/>
@@ -46,7 +47,7 @@ const About = () => {
           </div>
         </Col>
         <Col sm={12} md={4} lg={4} className="about-card" style={{backgroundColor: "#FFEEC4", color: "black"}}>
-          <h4>Created by <br/> <b>Iwona Behnke</b></h4>
+          <h5>Created by <br/> <b>Iwona Behnke</b></h5>
         </Col>
       </Row>
     </div>

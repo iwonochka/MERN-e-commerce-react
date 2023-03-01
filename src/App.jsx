@@ -1,5 +1,5 @@
 import "./App.css";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import HomePage from "./pages/homepage/HomePage";
 import Products from "./pages/products/Products";
 import Navbar from "./components/Navbar";
@@ -14,8 +14,9 @@ import { AuthContext } from "../src/context/auth.context";
 import Favs from "./pages/favs/Favs";
 import MyOrders from "./pages/my-orders/MyOrders";
 import axios from "axios";
-const REACT_APP_API_URL = "http://localhost:5005";
-const REACT_APP_API_URL2 = "https://vellox.cyclic.app";
+import Footer from "./components/footer/Footer";
+// const REACT_APP_API_URL = "http://localhost:5005";
+const REACT_APP_API_URL = "https://vellox.cyclic.app";
 
 function App() {
   const [products, setProducts] = useState([]);
@@ -26,11 +27,9 @@ function App() {
   const [filteredProducts, setFilteredProducts] = useState(products);
   const navigate = useNavigate();
 
-  console.log("items", cartItems);
-
   const getAllProducts = () => {
     axios
-      .get(`${REACT_APP_API_URL2}/api/products`)
+      .get(`${REACT_APP_API_URL}/api/products`)
       .then((response) => {
         setProducts(response.data);
         setFilteredProducts(response.data);
@@ -59,7 +58,6 @@ function App() {
 
   function updateTotal(items) {
     const sum = items.reduce((acc, item) => {
-      // console.log("acc", acc, "item.product.price", item.product.price)
       return acc + item.product.price;
     }, 0);
     setTotal(sum);
@@ -69,13 +67,11 @@ function App() {
     const result = [...favs]?.filter((fav) => {
       return fav._id === product._id;
     });
-    console.log(result);
     return result.length > 0;
   }
 
   function handleFavs(product) {
     if (user) {
-      // console.log(favs);
       isFav(product) ? deleteFav(product) : addFav(product);
     } else {
       navigate("/login");
@@ -85,7 +81,7 @@ function App() {
   const addFav = (product) => {
     const requestBody = { product, user };
     axios
-      .post(`${REACT_APP_API_URL2}/api/addFavs`, requestBody)
+      .post(`${REACT_APP_API_URL}/api/addFavs`, requestBody)
       .then((res) => {
         getFavs();
       })
@@ -97,7 +93,7 @@ function App() {
   const deleteFav = (product) => {
     const requestBody = { product, user };
     axios
-      .post(`${REACT_APP_API_URL2}/api/deleteFavs`, requestBody)
+      .post(`${REACT_APP_API_URL}/api/deleteFavs`, requestBody)
       .then((res) => {
         getFavs();
       })
@@ -107,12 +103,9 @@ function App() {
     getFavs();
   };
   const getFavs = () => {
-    console.log("url", `${REACT_APP_API_URL2}/api/favs/${user._id}`);
     axios
-      .get(`${REACT_APP_API_URL2}/api/favs/${user._id}`)
+      .get(`${REACT_APP_API_URL}/api/favs/${user._id}`)
       .then((response) => {
-        // console.log("response data favs", response.data.favs);
-
         setFavs(response.data.favs);
       })
       .catch((error) => console.log(error));
@@ -148,10 +141,6 @@ function App() {
         console.log("setFilterFor went to default!");
     }
   }
-
-  // useEffect(() => {
-  //   setFilterFor(window.location.pathname);
-  // }, [window.location.pathname]);
 
   return (
     <div className="App">
@@ -212,6 +201,7 @@ function App() {
               getAllProducts={getAllProducts}
               filteredProducts={filteredProducts}
               setFilteredProducts={setFilteredProducts}
+              setProducts={setProducts}
             />
           }
         />
@@ -251,6 +241,7 @@ function App() {
         />
         <Route path="/myOrders" element={<MyOrders total={total} />} />
       </Routes>
+      <Footer/>
     </div>
   );
 }

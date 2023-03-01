@@ -1,3 +1,13 @@
-.auth-form {
-  padding: 15vh 15vw 15vh 15vw;
+.login-container {
+  display: flex;
+  gap: 2rem;
+  width: 122vh;
+  margin: auto;
+}
+
+@media (max-width: 700px) {
+  .login-container{
+    flex-direction: column;
+    width: 80%;
+  }
 }

@@ -23,3 +23,12 @@ code {
 a {
   text-decoration: none;
 }
+
+.main-container {
+  min-height: 80vh;
+}
+
+.auth-container {
+  display: flex;
+  align-items: center;
+}
