@@ -15,7 +15,6 @@ const MyOrders = () => {
     axios
       .get(`${REACT_APP_API_URL}/api/orders/${user._id}`)
       .then((response) => {
-        console.log("response data", response.data);
 
         setOrders(response.data);
       })

@@ -18,7 +18,7 @@ const Cart = (props) => {
   const { storeToken, authenticateUser } = useContext(AuthContext);
   const [order, setOrder] = useState({});
   const [proceed, setProceed] = useState(false);
-  const [checkoutUser, setCheckoutUser] = useState({});
+  const [checkoutUser, setCheckoutUser] = useState(null);
 
   const [checkoutData, setCheckoutData] = useState({
     name: null,
@@ -34,6 +34,13 @@ const Cart = (props) => {
   useEffect(() => {
     saveCartItems();
   }, []);
+
+  useEffect(() => {
+    console.log("We're in useEffect for checkoutUser")
+    if (checkoutUser !== null) {
+      createOrder();
+    }
+  }, [checkoutUser]);
 
   function saveCartItems() {
     localStorage.setItem("cart-items", JSON.stringify(props.cartItems));
@@ -57,13 +64,15 @@ const Cart = (props) => {
           `${REACT_APP_API_URL}/auth/signup`,
           requestBody
         );
+        setCheckoutUser(signupRes.data.user);
         let res = await axios.post(
           `${REACT_APP_API_URL}/auth/login`,
           requestBody
         );
-        setCheckoutUser(res.data);
         storeToken(res.data.authToken);
         authenticateUser();
+      } else {
+        setCheckoutUser(user);
       }
     } catch (err) {
       console.log(err);
@@ -74,12 +83,12 @@ const Cart = (props) => {
     event.preventDefault();
     try {
       await createUser();
-      checkoutUser && createOrder();
     } catch (err) {
       console.log(err);
     }
   }
   function createOrder() {
+    if (Object.keys(checkoutUser).length === 0) return;
     const newOrder = {
       items: props.cartItems,
       user: checkoutUser,

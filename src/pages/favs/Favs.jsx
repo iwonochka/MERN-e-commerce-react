@@ -1,7 +1,5 @@
 import { useEffect, useContext, useState } from "react";
 import { AuthContext } from '../../context/auth.context';
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { Link } from "react-router-dom";
 import {AiFillDelete} from "react-icons/ai"
 import Container from "react-bootstrap/Container";
