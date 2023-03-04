@@ -61,7 +61,7 @@ const Login = () => {
                 }}
               />
               <Form.Text className="text-muted">
-                At least 6 characters and 1 special sign
+                At least 6 characters
               </Form.Text>
             </Form.Group>
             <Button variant="dark" type="submit">
@@ -71,7 +71,6 @@ const Login = () => {
           {message && (
             <div>
               <p>{message}</p>
-              <p>You'll be redirected to login page in ... s</p>
             </div>
           )}
         </Col>

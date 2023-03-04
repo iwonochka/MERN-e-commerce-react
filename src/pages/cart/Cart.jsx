@@ -239,7 +239,7 @@ const Cart = (props) => {
                     <Form.Label>Password</Form.Label>
                     <Form.Control
                       type="password"
-                      placeholder="Enter password"
+                      placeholder="min 6 characters"
                       onChange={(e) =>
                         setCheckoutData({
                           ...checkoutData,
