@@ -65,7 +65,7 @@ const Signup = () => {
             />
           </Form.Group>
           <Form.Text className="text-muted">
-            At least 6 characters and 1 special sign
+            At least 6 characters
           </Form.Text>
           <Button variant="dark" type="submit" className="signup-btn">
             Create account
