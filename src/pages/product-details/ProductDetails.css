@@ -98,24 +98,43 @@
   .actions-container {
     flex-direction: column;
   }
-  #fav-btn {
+  .fav-btn {
     position: absolute;
-    bottom: 36vh;
+    bottom: 37vw;
     left: 67%;
   }
   .product-details-container {
     margin-top: 10vh;
     margin-bottom: 20vh;
   }
+  .product-description-header {
+    text-align: left;
+  }
 }
+
+@media (min-width: 326px) and (max-width: 1022px) {
+  .fav-btn {
+    position: absolute;
+    right: 0;
+    bottom: 33vh;
+  }
+}
+
 
 @media (max-width: 325px) {
   .actions-container {
     display: block;
   }
+
+  .fav-btn {
+    position: absolute;
+    right: 0;
+    bottom: 286px;
+  }
+
   #action-btn {
     position: relative;
-    right: 33vw;
     bottom: -8vh;
+    right: 111px;
   }
 }

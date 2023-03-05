@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 import logo from '../assets/vellox.png'
 
-const Navbar = ({cartItems, favs}) => {
+const Navbar = ({cartItems, favs, clearCart}) => {
   const { isLoggedIn, logOutUser } = useContext(AuthContext);
 
   return (
@@ -50,7 +50,9 @@ const Navbar = ({cartItems, favs}) => {
             <Dropdown.Item>
               <Link to="/myOrders">My Orders</Link>
             </Dropdown.Item>
-            <Dropdown.Item href="/" onClick={logOutUser}><Link to="/">Log out</Link></Dropdown.Item>
+            <Dropdown.Item href="/" onClick={() => {logOutUser(); clearCart();}}>
+              <Link to="/">Log out</Link>
+            </Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown> :
         <NavLink to="/login" className={({ isActive }) => isActive ? 'activeNavLink' : 'navLink'}><BiUserX style={{width: 20}}/></NavLink>

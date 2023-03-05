@@ -63,6 +63,11 @@ function App() {
     setTotal(sum);
   }
 
+  function clearCart() {
+    setCartItems([]);
+    updateTotal(0);
+  }
+
   function isFav(product) {
     const result = [...favs]?.filter((fav) => {
       return fav._id === product._id;
@@ -141,7 +146,7 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar cartItems={cartItems} favs={favs} />
+      <Navbar cartItems={cartItems} favs={favs} clearCart={clearCart} />
       <Routes>
         <Route path="/" element={<HomePage setFilterFor={setFilterFor} />} />
         <Route path="/about" element={<About />} />
@@ -213,6 +218,7 @@ function App() {
               total={total}
               setTotal={setTotal}
               updateTotal={updateTotal}
+              clearCart={clearCart}
             />
           }
         />

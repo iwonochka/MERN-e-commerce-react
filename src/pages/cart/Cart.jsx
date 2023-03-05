@@ -9,6 +9,7 @@ import "./Cart.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { AiOutlineCheckCircle } from "react-icons/ai";
+import { Link } from "react-router-dom";
 
 // const REACT_APP_API_URL = "http://localhost:5005";
 const REACT_APP_API_URL = "https://vellox.cyclic.app";
@@ -52,6 +53,8 @@ const Cart = (props) => {
     props.setCartItems(newCartItems);
     props.updateTotal(newCartItems);
   }
+
+
 
   async function createUser() {
     try {
@@ -158,10 +161,10 @@ const Cart = (props) => {
                     </div>
                   ))}
               </div>
-            </div>
-            <div className="cart-total">
-              <h4>TOTAL</h4>
-              <h4>{props.total} €</h4>
+              <div className="cart-total">
+                <h4>TOTAL</h4>
+                <h4>{props.total} €</h4>
+              </div>
             </div>
           </Col>
           <Col sm={12} md={12} lg={12} xl={6}>
@@ -336,10 +339,17 @@ const Cart = (props) => {
             {proceed && (
               <div className="payment-container">
                 <div className="payment-btn">
-                  <AiOutlineCheckCircle />
+                  <AiOutlineCheckCircle fontSize={40} color="#0c7c72" />
+                  <div className="payment-btn-text">
+                    <p>Order confirmed! 🎉</p>
+                    <p>Choose payment</p>
+                  </div>
                   <div>
-                    <p>Order confirmed</p>
-                    <p> Choose payment</p>
+                  <Button className="mt-3 mb-3" variant="dark" type="submit">
+                    <Link to={`/myOrders`} onClick={() => {props.clearCart()}} className="color-inherit">
+                      Your orders
+                    </Link>
+                  </Button>
                   </div>
                 </div>
 
@@ -348,9 +358,8 @@ const Cart = (props) => {
             )}
           </Col>
         </Row>
-      ) : (
-        <p className="mt-4">Your cart is empty</p>
-      )}
+      ) : ( <p className="mt-4">Your cart is empty</p>
+        )}
     </main>
   );
 };
