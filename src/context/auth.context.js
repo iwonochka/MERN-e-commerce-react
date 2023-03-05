@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-const REACT_APP_API_URL="http://localhost:5005"
-// const REACT_APP_API_URL="https://vellox.cyclic.app"
+// const REACT_APP_API_URL="http://localhost:5005"
+const REACT_APP_API_URL="https://vellox.cyclic.app"
 
 const AuthContext = React.createContext();
 

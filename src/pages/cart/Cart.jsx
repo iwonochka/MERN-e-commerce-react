@@ -11,8 +11,8 @@ import Col from "react-bootstrap/Col";
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
-const REACT_APP_API_URL = "http://localhost:5005";
-// const REACT_APP_API_URL = "https://vellox.cyclic.app";
+// const REACT_APP_API_URL = "http://localhost:5005";
+const REACT_APP_API_URL = "https://vellox.cyclic.app";
 
 const Cart = (props) => {
   const { user } = useContext(AuthContext);
