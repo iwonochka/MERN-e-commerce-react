@@ -3,6 +3,7 @@ import { AuthContext } from '../../context/auth.context';
 import { Link } from "react-router-dom";
 import {AiFillDelete} from "react-icons/ai"
 import Container from "react-bootstrap/Container";
+import "./Favs.css" ;
 
 
 const Favs = ({favs, deleteFav, getFavs}) => {
@@ -16,7 +17,7 @@ const Favs = ({favs, deleteFav, getFavs}) => {
     <section className="secondary-header">
       <h3>Favourites</h3>
     </section>
-      <Container className="grid-wrapper">
+      <Container className="favs-grid-wrapper">
         {!favs.length && <p>Add some products to your favorites!</p>}
         {favs?.map((fav) => {
           return (

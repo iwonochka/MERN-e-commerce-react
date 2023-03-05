@@ -1,0 +1,19 @@
+.favs-grid-wrapper {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(3, minmax(37vh, 1fr));
+  padding: 0;
+  margin: 2rem auto;
+}
+
+@media (min-width: 768px) and (max-width: 1025px)  {
+  .favs-grid-wrapper {
+    grid-template-columns: repeat(2, minmax(37vh, 1fr));
+  }
+}
+
+@media (max-width: 767px) {
+  .favs-grid-wrapper {
+    grid-template-columns: repeat(1, minmax(37vh, 1fr));
+  }
+}

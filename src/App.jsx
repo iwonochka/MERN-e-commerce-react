@@ -15,8 +15,8 @@ import Favs from "./pages/favs/Favs";
 import MyOrders from "./pages/my-orders/MyOrders";
 import axios from "axios";
 import Footer from "./components/footer/Footer";
-// const REACT_APP_API_URL = "http://localhost:5005";
-const REACT_APP_API_URL = "https://vellox.cyclic.app";
+const REACT_APP_API_URL = "http://localhost:5005";
+// const REACT_APP_API_URL = "https://vellox.cyclic.app";
 
 function App() {
   const [products, setProducts] = useState([]);

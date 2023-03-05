@@ -11,8 +11,8 @@ const Signup = () => {
   const [name, setName] = useState("");
   const [message, setMessage] = useState(undefined);
   const navigate = useNavigate();
-  // const REACT_APP_API_URL="http://localhost:5005"
-  const REACT_APP_API_URL="https://vellox.cyclic.app"
+  const REACT_APP_API_URL="http://localhost:5005"
+  // const REACT_APP_API_URL="https://vellox.cyclic.app"
 
   function handleSubmit(e) {
     e.preventDefault();

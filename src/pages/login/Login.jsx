@@ -7,8 +7,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth.context";
-// const REACT_APP_API_URL="http://localhost:5005"
-const REACT_APP_API_URL="https://vellox.cyclic.app"
+const REACT_APP_API_URL="http://localhost:5005"
+// const REACT_APP_API_URL="https://vellox.cyclic.app"
 
 const Login = () => {
   const [email, setEmail] = useState("");
