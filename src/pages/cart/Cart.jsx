@@ -37,7 +37,7 @@ const Cart = (props) => {
   }, []);
 
   useEffect(() => {
-    console.log("We're in useEffect for checkoutUser")
+    // console.log("We're in useEffect for checkoutUser")
     if (checkoutUser !== null) {
       createOrder();
     }

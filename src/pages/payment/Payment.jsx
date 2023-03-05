@@ -1,7 +1,7 @@
 import {PayPalScriptProvider, PayPalButtons} from "@paypal/react-paypal-js";
 
 const Payment = () => {
-  console.log(process.env.REACT_APP_PAY_PAL_CLIENT_ID)
+  // console.log(process.env.REACT_APP_PAY_PAL_CLIENT_ID)
 
   return (
     <div>
@@ -41,5 +41,3 @@ const Payment = () => {
 }
 
 export default Payment
-
-
